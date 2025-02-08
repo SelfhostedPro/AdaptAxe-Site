@@ -1,0 +1,52 @@
+{
+  "name": "Stephen Kluthe",
+  "profession": "Maker",
+  "title": "AdaptAxe",
+  "headline": "Adapt  Evolve  Shred",
+  "socials": [
+    {
+      "url": "/",
+      "icon": "home"
+    },
+    {
+      "url": "tel:+14428997309",
+      "icon": "phone"
+    },
+    {
+      "url": "mailto:stephen@adaptaxe.com",
+      "icon": "mail"
+    },
+    {
+      "url": "https://www.instagram.com/adaptaxe/",
+      "icon": "instagram"
+    }
+  ],
+  "links": [
+    {
+      "url": "/explore",
+      "icon": "map",
+      "title": "Explore",
+      "description": "An in-depth view of how things work"
+    },
+    {
+      "url": "https://forms.gle/FksvpzrdzSmAu7Ek7",
+      "icon": "notepad-text",
+      "title": "Feedback and Updates",
+      "description": "Let me know what you think"
+    }
+  ],
+  "placeholder": [
+    {
+      "url": "tel:+14428997309",
+      "icon": "phone",
+      "title": "Call or Text Me",
+      "description": "+1 (442) 899-7309"
+    },
+    {
+      "url": "mailto:stephen@adaptaxe.com",
+      "icon": "mail",
+      "title": "Email Me",
+      "description": "stephen@adaptaxe.com"
+    }
+  ]
+}

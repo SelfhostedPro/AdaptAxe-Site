@@ -1,0 +1,46 @@
+---
+import "@/styles/globals.css";
+import { SEO } from "astro-seo";
+import Posthog from '@/components/Utils/Posthog.astro'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+	<SEO
+		charset="UTF-8"
+		title="AdaptAxe - Fully Modular"
+		description="Transform your guitar's sound and style in seconds without any tools."
+		openGraph={{
+			basic: {
+				title: 'AdaptAxe - Fully Modular',
+				type: 'website',
+				image: 'https://adaptaxe.com/images/Home.png'
+			},
+			optional: {
+				description: "Transform your guitar's sound and style in seconds without any tools."
+			}
+		}}
+		extend={{
+			meta: [
+				{name: "viewport", content: "width=device-width"},
+				{name: "generator", content: Astro.generator}
+			],
+			link: [{rel: "icon", type: "image/svg+xml", href:"/icons/favicon.ico"}]
+		}}
+	/>
+	<Posthog />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
