@@ -697,8 +697,8 @@ export function Overlay() {
           name: "Email",
           icon: Mail,
           description:
-            "stephen.kluthe+guitar@gmail.com",
-          href: "mailto:stephen.kluthe+guitar@gmail.com",
+            "stephen@adaptaxe.com",
+          href: "mailto:stephen@adaptaxe.com",
         },
         {
           name: "Phone",
