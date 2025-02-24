@@ -9,6 +9,7 @@
   "compatibility_date": "2024-09-26",
   "compatibility_flags": ["nodejs_compat"],
   "minify": true,
+  "routes": [{ "pattern": "adaptaxe.com", "custom_domain": true }],
   "assets": {
     "binding": "ASSETS",
     "directory": ".open-next/assets",
@@ -20,6 +21,12 @@
     "port": 3000,
     "ip": "0.0.0.0",
   },
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_CACHE_WORKERS_KV",
+      "id": "5f89949299a54e4b833d547bfad9cb27"
+    }
+  ]
   /**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

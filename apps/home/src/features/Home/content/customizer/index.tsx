@@ -11,11 +11,15 @@ import { StyleSelector } from "./StyleSelector";
 import { VisibilityControls } from "./VisibilityControls";
 import gsap from "gsap";
 import * as THREE from "three";
+import { ProgressIndicator } from "../ProgressIndicator";
+import { Parts } from "@/constants";
+import { SectionState } from "../../store";
 
 type BodyRefs = Record<string, RefObject<THREE.Group | THREE.Mesh | null>>;
 export function Customizer() {
   const gsnap = useSnapshot(GuitarState);
   const usnap = useSnapshot(UIState);
+  const ssnap = useSnapshot(SectionState)
   const { refs } = useGuitar();
   const tl = useRef<GSAPTimeline>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
@@ -39,10 +43,15 @@ export function Customizer() {
       ? tl.current
       : gsap.timeline().set([controlsRef.current, visibilityRef.current], {
           x: 200,
-          duration: 0,
         });
-    tl.current.to(controlsRef.current, { x: usnap.controlsOpen ? 0 : 200 });
-    tl.current.to(visibilityRef.current, { x: usnap.visibilityOpen ? 0 : 200 });
+    tl.current.to(controlsRef.current, {
+      x: usnap.controlsOpen ? 0 : 200,
+      duration: 0.2,
+    });
+    tl.current.to(visibilityRef.current, {
+      x: usnap.visibilityOpen ? 0 : 200,
+      duration: 0.2,
+    });
   }, [usnap.controlsOpen, usnap.visibilityOpen]);
 
   return (
@@ -65,6 +74,12 @@ export function Customizer() {
             <StyleSelector />
           </CardContent>
         </Card>
+      </div>
+      <div className="fixed bottom-0 w-full p-8 transition-all duration-200 delay-300 z-0">
+        <ProgressIndicator
+          currentSection={Parts.indexOf(ssnap.section)}
+          totalSections={Parts.length}
+        />
       </div>
     </>
   );

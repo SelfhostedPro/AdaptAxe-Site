@@ -4,6 +4,8 @@ import { cn } from "@workspace/ui/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { Observer } from "gsap/Observer";
+import { useSnapshot } from "valtio";
+import { GuitarState } from "@/store/guitar";
 gsap.registerPlugin(ScrollTrigger, Observer);
 interface DrawerProps {
   children: React.ReactNode;
@@ -17,13 +19,13 @@ interface DrawerProps {
 
 export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
-    <div className="w-full  py-4 text-center z-50">
-      <div className="absolute top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5">
+    <div className="w-full py-4 text-center z-50">
+      <div className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5">
         <span
           className={cn(
             isExpanded ? "rotate-180" : "rotate-0",
             "transition-all",
-            `duration-100`
+            `duration-200`
           )}
         >
           {"^^^"}
@@ -33,7 +35,7 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
           className={cn(
             isExpanded ? "rotate-180" : "rotate-0",
             "transition-all",
-            `duration-100`
+            `duration-200`
           )}
         >
           {"^^^"}
@@ -46,13 +48,13 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
           textOrientation: "sideways",
         }}
         className={cn(
-          "absolute transition-all flex flex-row gap-2 text-foreground/60 left-0 top-5 font-mono text-xs font-bold"
+          "absolute transition-all flex flex-row gap-2 text-foreground/60 left-0.5 top-8 font-mono text-xs font-bold"
         )}
       >
         <span
           className={cn(
             isExpanded ? "opacity-0" : "opacity-100",
-            "transition-all duration-100"
+            "transition-all duration-200"
           )}
         >
           {"<<< "}
@@ -61,7 +63,7 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
         <span
           className={cn(
             isExpanded ? "opacity-100" : "opacity-0",
-            "transition-all duration-100"
+            "transition-all duration-200"
           )}
         >
           {" >>>"}
@@ -79,12 +81,13 @@ export const MobileDrawer = ({
   setIsExpanded,
   isAnimating,
 }: DrawerProps) => {
+  const gsnap = useSnapshot(GuitarState);
   const height = isExpanded ? maxHeight : minHeight;
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleDragEnd = (event: any, info: any) => {
-    ScrollTrigger.getById("container")?.enable();
+    ScrollTrigger.getById("container")?.enable(false, false);
     Observer.getById("ios-observe")?.enable();
 
     if (isAnimating) return;
@@ -112,7 +115,7 @@ export const MobileDrawer = ({
       }}
     >
       <motion.div
-        className="w-full h-full rounded-t-2xl bg-background/60 backdrop-blur-lg cursor-grab active:cursor-grabbing flex flex-col"
+        className="w-full h-full rounded-t-2xl bg-background/40 border-t-2 border-x-2 border-foreground/10 cursor-grab backdrop-blur-3xl active:cursor-grabbing flex flex-col px-1"
         drag="y"
         dragControls={dragControls}
         dragConstraints={{
@@ -124,19 +127,19 @@ export const MobileDrawer = ({
         onDragEnd={handleDragEnd}
         onDragStart={(e) => {
           e.stopPropagation();
-          ScrollTrigger.getById("container")?.disable(false);
+          ScrollTrigger.getById("container")?.disable(false, false);
           Observer.getById("ios-observe")?.disable();
         }}
         onTap={() => setIsExpanded(!isExpanded)}
         onPointerDown={(e) => {
           e.stopPropagation();
-          ScrollTrigger.getById("container")?.disable(false);
+          ScrollTrigger.getById("container")?.disable(false, false);
           Observer.getById("ios-observe")?.disable();
 
           dragControls.start(e);
         }}
         onPointerUp={(e) => {
-          ScrollTrigger.getById("container")?.enable();
+          ScrollTrigger.getById("container")?.enable(false, false);
           Observer.getById("ios-observe")?.enable();
         }}
       >
@@ -144,7 +147,7 @@ export const MobileDrawer = ({
         <DrawerHandle isExpanded={isExpanded} />
         {/* Content area */}
         <div
-          className="px-5 flex-1 inline-block overflow-y-auto"
+          className="mx-4 flex-1 inline-block overflow-y-auto rounded-t-lg bg-background"
           style={{
             height: `calc(${height} - 3rem)`,
             overscrollBehavior: "contain",

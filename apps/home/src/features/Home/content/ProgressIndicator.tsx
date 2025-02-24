@@ -23,7 +23,7 @@ export function ProgressIndicator({
         }
       }}
       className={cn(
-        mobile ? "top-[25vh] right-6" : "bottom-4 right-4",
+        mobile ? "top-[20vh] right-6" : "bottom-4 right-4",
         "cursor-pointer fixed  z-30 flex items-center space-x-4 bg-background/60 backdrop-blur-md rounded-full px-2 py-1"
       )}
     >

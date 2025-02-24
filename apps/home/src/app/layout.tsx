@@ -5,22 +5,10 @@ import { ThemeProvider } from "@workspace/ui/components/providers/theme";
 // Meta
 import type { Metadata } from "next";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/constants";
-import {
-  Geist,
-  Geist_Mono,
-  Outfit,
-  JetBrains_Mono,
-  Chivo_Mono,
-  Archivo_Black,
-  Archivo,
-  Source_Code_Pro,
-  Mona_Sans,
-  Roboto_Condensed,
-  Roboto_Flex,
-  Roboto_Mono,
-  Roboto,
-  Chivo,
-} from "next/font/google";
+import { JetBrains_Mono, Chivo } from "next/font/google";
+
+// Analytics
+import { PostHogProvider } from "@/components/providers/Posthog";
 
 export const metadata: Metadata = {
   title: {
@@ -66,8 +54,6 @@ export const metadata: Metadata = {
   },
 };
 
-// weight: ['100', '200', '300', '400', '500', '600', '700'],
-
 const fontSans = Chivo({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -77,7 +63,6 @@ const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
-
 
 export default function RootLayout({
   children,
@@ -90,7 +75,9 @@ export default function RootLayout({
         className={`${fontSans.variable}  ${fontMono.variable} font-sans antialiased `}
         suppressHydrationWarning
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

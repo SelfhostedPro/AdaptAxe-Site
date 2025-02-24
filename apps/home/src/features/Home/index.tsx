@@ -15,6 +15,8 @@ import { Parts } from "@/constants";
 import { TextAccents } from "./content/accents/background";
 import { Customizer } from "./content/customizer";
 import { useGuitarRefs } from "@/hooks/useGuitarRefs";
+import { UIState } from "@/store/ui";
+import { cn } from "@workspace/ui/lib/utils";
 
 export default function Explore() {
   return (
@@ -45,6 +47,7 @@ function Loader() {
 
 function _Explore() {
   const ssnap = useSnapshot(SectionState);
+  const usnap = useSnapshot(UIState);
   const containerRef = useGuitarRefs().containerRef;
 
   return (
@@ -78,12 +81,7 @@ function _Explore() {
         </MainCanvas>
       </div>
       {/* Progress Indicator - Always on top */}
-      <div className="fixed z-40 bottom-0 w-full p-8">
-        <ProgressIndicator
-          currentSection={Parts.indexOf(ssnap.section)}
-          totalSections={Parts.length}
-        />
-      </div>
+
     </main>
   );
 }

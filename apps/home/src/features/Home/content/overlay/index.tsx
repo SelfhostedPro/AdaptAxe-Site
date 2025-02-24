@@ -34,7 +34,7 @@ const FeatureItemContainer = ({
   ) : (
     <div
       className={cn(
-        "group relative flex rounded-none pointer-events-auto w-full pr-2",
+        "group relative flex rounded-none pointer-events-auto w-full px-2 md:px-0 md:pr-2",
         (feature.onClick || feature.onPointerEnter || feature.onPointerLeave) &&
           "cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left"
       )}
@@ -84,12 +84,13 @@ const FeatureItem = ({ feature }: { feature: Feature }) => {
 
 const SectionContainer = ({
   section,
-  index
+  index,
 }: {
   section: ReturnType<typeof useSections>[number];
   index: number;
 }) => {
   const { mobile } = useBreakpoints();
+  const gsnap = useSnapshot(GuitarState);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -132,9 +133,11 @@ const SectionContainer = ({
             />
 
             {/* Description */}
-            <div className="max-w-[80%] md:max-w-[90%] text-sm px-4 md:text-lg font-medium text-foreground/80 leading-relaxed font-mono mt-1 md:mt-2 ml-8 md:ml-16">
-              {section.content}
-            </div>
+            {!mobile && (
+              <div className="max-w-[80%] md:max-w-[90%] text-sm px-4 md:text-lg font-medium text-foreground/80 leading-relaxed font-mono mt-1 md:mt-2 ml-8 md:ml-16">
+                {section.content}
+              </div>
+            )}
           </div>
 
           {/* Draggable Features Container */}
@@ -146,6 +149,13 @@ const SectionContainer = ({
               maxHeight="70dvh"
             >
               <div className="space-y-4">
+                <div className="px-2 text-foreground/70 text-center w-full py-4">
+                  <div
+                    className="w-[2px] mr-2 self-stretch shrink-0"
+                    style={{ background: gsnap.primary }}
+                  />
+                  {section.content}
+                </div>
                 {section.features?.map((feature) => (
                   <FeatureItem
                     key={feature.name}
