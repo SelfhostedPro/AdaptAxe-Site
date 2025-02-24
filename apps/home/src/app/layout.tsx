@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     "Showcase",
   ],
   creator: "Stephen Kluthe",
+  authors: [{ name: "Stephen Kluthe" }],
   openGraph: {
     type: "website",
     locale: "en_US",

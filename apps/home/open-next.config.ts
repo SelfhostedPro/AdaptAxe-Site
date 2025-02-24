@@ -1,8 +1,9 @@
 import incrementalCache from "@opennextjs/cloudflare/kv-cache";
+
 import memoryQueue from "@opennextjs/cloudflare/memory-queue";
 import type { OpenNextConfig } from "@opennextjs/aws/types/open-next.js";
 
-const config:  OpenNextConfig = {
+const config: OpenNextConfig = {
   default: {
     override: {
       wrapper: "cloudflare-node",
@@ -20,7 +21,6 @@ const config:  OpenNextConfig = {
       proxyExternalRequest: "fetch",
     },
   },
-
   dangerous: {
     enableCacheInterception: false,
   },
