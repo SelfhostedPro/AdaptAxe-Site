@@ -1,31 +1,57 @@
-# shadcn/ui monorepo template
+# AdaptAxe Website
 
-This template is for creating a monorepo with shadcn/ui.
+Interactive 3D website showcasing the modular AdaptAxe guitar system at [adaptaxe.com](https://adaptaxe.com)
 
-## Usage
+## Overview
+
+Built with Next.js and Three.js, this website provides an immersive 3D visualization of the AdaptAxe modular guitar, allowing users to explore its customizable components and unique features.
+
+## Tech Stack
+
+- Next.js
+- OpenNext.js
+- R3F/Three.js for 3D rendering
+- GSAP for animations
+- TypeScript
+- Cloudflare Workers
+
+## Features
+
+- Interactive 3D model of the AdaptAxe guitar
+- Component visualization and customization
+- Responsive design for all devices
+- Product information and specifications
+
+## Development
 
 ```bash
-pnpm dlx shadcn@latest init
+# Install dependencies
+bun i
+
+# Start development server
+bun dev ## Webpack
+bun fast ## Turbo
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
 ```
 
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
+## Project Structure
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/web
+/
+├── src/
+│   ├── app/           # AppRouter
+│   ├── features/      # Main Features of the Website. Currently Home is the only one in use.
+│   ├── store/         # Stores to be reused in the future
+│   ├── hooks/         # Hooks to be reused in the future
+│   └── types/         # Types (mainly for raw loader)
+└── public/            # Static assets
 ```
 
-This will place the ui components in the `packages/ui/src/components` directory.
+## Contributing
 
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/ui/button"
-```
+Issues and pull requests welcome.
