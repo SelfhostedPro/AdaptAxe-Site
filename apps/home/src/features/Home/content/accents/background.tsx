@@ -12,8 +12,6 @@ const ScrollIndicator = () => {
   const [isVisible, setIsVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
   const { mobile } = useBreakpoints();
-  const rotateLeft = "-rotate-180";
-  const rotateRight = "rotate-180";
 
   useEffect(() => {
     const handleActivity = () => {
@@ -39,7 +37,7 @@ const ScrollIndicator = () => {
   return (
     <div
       className={cn(
-        mobile ? "right-10 bottom-2" : "left-7 bottom-2",
+        mobile ? "right-10 bottom-2" : "left-10 bottom-2",
         "fixed animate-bounce z-50 "
       )}
       style={{
@@ -53,7 +51,7 @@ const ScrollIndicator = () => {
           writingMode: "vertical-rl",
           textOrientation: "sideways",
         }}
-        className="transition-all font-mono text-foreground/40 text-xs"
+        className="transition-all font-mono text-foreground/80 text-xs"
       >
         SCROLL DOWN {">>>"}
       </div>
@@ -296,7 +294,7 @@ export function TextAccents() {
           opacity: 0,
           ...leftAccentStyle,
         }}
-        className="absolute flex flex-row top-0 h-screen left-7 gap-4 text-xs font-mono text-foreground/40 items-center justify-center z-0 [writing-mode:sideways-lr] [text-orientation: sideways]"
+        className="absolute flex flex-row top-0 h-dvh left-7 gap-4 text-xs font-mono text-foreground/40 items-center justify-center z-0"
       >
         <LeftSubAccents />
       </div>
@@ -308,7 +306,7 @@ export function TextAccents() {
           animationDelay: "0.3s",
           opacity: 0,
         }}
-        className="absolute left-1 top-0 bottom-0 border-r-[0.1px] bg-background border-foreground/40 flex h-screen overflow-hidden z-10"
+        className="absolute left-1 top-0 bottom-0 border-r-[0.1px] bg-background border-foreground/40 flex h-dvh overflow-hidden z-10"
       >
         <div
           className="animate-marquee-up flex flex-col gap-8 py-4"
@@ -328,7 +326,7 @@ export function TextAccents() {
           animationDelay: "0.3s",
           opacity: 0,
         }}
-        className="absolute right-1 border-l-[0.1px] bg-background border-foreground/40 top-0 bottom-0 flex h-screen overflow-hidden z-10"
+        className="absolute right-1 border-l-[0.1px] bg-background border-foreground/40 top-0 bottom-0 flex h-dvh overflow-hidden z-10"
       >
         <div
           className="animate-marquee-down flex flex-col gap-8 py-4"

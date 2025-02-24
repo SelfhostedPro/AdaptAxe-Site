@@ -1,7 +1,7 @@
 "use client";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { cn } from "@workspace/ui/lib/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function ProgressIndicator({
   currentSection,
@@ -12,17 +12,7 @@ export function ProgressIndicator({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { mobile } = useBreakpoints();
-  const [isMounted, setIsMounted] = useState(false);
 
-  // Handle hydration mismatch
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Don't render mobile-specific content until after hydration
-  if (!isMounted) {
-    return null; // or a loading state
-  }
   return (
     <div
       onClick={() => {

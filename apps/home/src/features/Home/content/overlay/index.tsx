@@ -3,27 +3,14 @@ import { useSnapshot } from "valtio/react";
 import { GuitarState } from "@/store/guitar";
 import { UIState } from "@/store/ui";
 import { useSections } from "../sections";
-import { LucideIcon, CircleDot } from "lucide-react";
+import { CircleDot } from "lucide-react";
 import { cn } from "@workspace/ui/lib/utils";
 import { ExploreAnimations } from "../../animations/timeline";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Socials } from "@/components/Links";
-import Link from "next/link";
 import { TitleAccent } from "../accents/foreground";
-import { motion, AnimatePresence, useDragControls } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { Feature, Section } from "../sections";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@workspace/ui/components/drawer";
-import gsap from "gsap";
+import { useState } from "react";
+import { Feature } from "../sections";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { MobileDrawer } from "./MobileDrawer";
 
@@ -97,7 +84,7 @@ const FeatureItem = ({ feature }: { feature: Feature }) => {
 
 const SectionContainer = ({
   section,
-  index,
+  index
 }: {
   section: ReturnType<typeof useSections>[number];
   index: number;
@@ -124,11 +111,11 @@ const SectionContainer = ({
 
   return (
     <div
-      className={`w-screen h-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen`}
+      className={`h-dvh w-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen absolute left-${index * 100}`}
     >
       {/* Content layer */}
       <div
-        className={`${section.class}-card content relative z-10 h-screen min-w-[45vw] flex flex-col pt-10 md:pb-16`}
+        className={`${section.class}-card relative z-10 h-dvh min-w-[45vw] flex flex-col pt-10 md:pb-16`}
       >
         {/* Content container */}
         <div
@@ -155,8 +142,8 @@ const SectionContainer = ({
             <MobileDrawer
               isExpanded={isExpanded}
               setIsExpanded={setIsExpanded}
-              minHeight="15vh"
-              maxHeight="60vh"
+              minHeight="15dvh"
+              maxHeight="70dvh"
             >
               <div className="space-y-4">
                 {section.features?.map((feature) => (
@@ -198,7 +185,7 @@ export function Overlay() {
           color: gsnap.primary,
           display: usnap.display ? "none" : "unset",
         }}
-        className="absolute h-screen w-screen pointer-events-none z-0 transition-colors duration-200"
+        className="absolute h-dvh w-screen pointer-events-none z-0 transition-colors duration-200"
       >
         <div
           className={cn(

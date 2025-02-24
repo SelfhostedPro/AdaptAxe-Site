@@ -1,8 +1,8 @@
 import { proxy } from "valtio";
-import { PartType, Parts } from "@/constants";
+import { PartType } from "@/constants";
 
 interface SectionStateStore {
-    section: PartType,
+  section: PartType;
 }
 
 const state = proxy<SectionStateStore>({

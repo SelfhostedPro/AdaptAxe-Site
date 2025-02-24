@@ -1,4 +1,3 @@
-import { useSnapshot } from 'valtio';
 import { GuitarState } from '@/store/guitar';
 
 export function ColorPicker({ colors, label, stateKey }: {

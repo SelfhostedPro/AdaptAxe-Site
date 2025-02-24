@@ -1,7 +1,7 @@
 "use client";
-import { useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
-
+import { useDesktopScroll, useMobileScroll } from "./scrollers";
 // GSAP
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -28,35 +28,14 @@ import { type GuitarRefs } from "@/hooks/useGuitarRefs";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-// helper function for causing the sections to always snap in the direction of the scroll
-function directionalSnap(increment: number, sensitivity: number = 0.1) {
-  const snapFunc = gsap.utils.snap(increment);
-  return (raw: number, self: any) => {
-    let n = snapFunc(raw);
-
-    // Only snap back if we haven't scrolled far from current section
-    if (Math.abs(raw - self.lastSnap) < increment * sensitivity) {
-      return self.lastSnap; // Stay at the current section
-    }
-
-    return Math.abs(n - raw) < 1e-4 + increment * sensitivity ||
-      n < raw === self.direction < 0
-      ? n
-      : self.direction < 0
-        ? n - increment
-        : n + increment;
-  };
-}
-
 export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
   const { lg } = useBreakpoints();
   const timeline = useRef<GSAPTimeline>(null);
   const gsnap = useSnapshot(GuitarState);
   const { active, progress } = useProgress();
-  // const scrollTween = useRef<gsap.core.Tween>(null);
-  const isAnimating = useRef(false);
-  const currentSection = useRef(0);
-  const scrollTween = useRef<gsap.core.Tween>(null);
+  // const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const animating = useRef(false);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   useGSAP(
     () => {
@@ -66,38 +45,12 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       timeline.current = gsap.timeline();
 
       // Setup Scroll Animations
-      const sections = gsap.utils.toArray(".section");
+      const sections = gsap.utils.toArray(".section") as HTMLDivElement[];
 
-      // const scrollTween = gsap.timeline({ paused: true }).to(sections, {
-      //   id: "container",
-      //   xPercent: -100 * (sections.length - 1),
-      //   ease: "none",
-      //   duration: sections.length - 1,
-      // });
-
-      const scrollTween = gsap.to(sections, {
-        id: "container",
-        xPercent: () => -100 * (sections.length - 1),
-        ease: "none",
-        // duration: sections.length,
-        scrollTrigger: {
-          trigger: ".scroll-container",
-          pin: true,
-          pinSpacing: true,
-          scrub: true,
-          invalidateOnRefresh: true,
-          snap: {
-            snapTo: directionalSnap(1 / (sections.length - 1), 0.4),
-            delay: 0,
-            inertia: false,
-            duration: { min: 0.2, max: 0.5 },
-            ease: "none",
-            directional: true,
-          },
-          start: "left left",
-          end: () => `+=${sections.length * 100}%`,
-        },
-      });
+      // Use appropriate scroll controller
+      const scrollTween = isIOS
+        ? useMobileScroll(sections, animating)
+        : useDesktopScroll(sections);
 
       const contents = gsap.utils.toArray(".content");
       contents.forEach((content, i) => {
@@ -119,6 +72,8 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
               invalidateOnRefresh: true,
               // markers: { indent: i * 30 },
               // pin: sections[i] as HTMLDivElement,
+              pin: true,
+              pinSpacing: true,
               pinnedContainer: ".scroll-container",
               trigger: content as gsap.DOMTarget,
               scrub: true,

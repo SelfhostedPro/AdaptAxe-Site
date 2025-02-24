@@ -2,16 +2,12 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { RefObject, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { useSnapshot } from "valtio";
-import { UIState } from "@/store/ui";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Eye, EyeClosed } from "lucide-react";
 type BodyRefs = Record<string, RefObject<THREE.Group | THREE.Mesh | null>>;
 
 export function VisibilityControls() {
   const { refs } = useGuitar();
-
-  const usnap = useSnapshot(UIState);
   const bodyRefs = useRef<BodyRefs>({});
   const [visibilityState, setVisibilityState] = useState<
     Record<string, boolean>

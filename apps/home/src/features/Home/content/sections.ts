@@ -4,6 +4,8 @@ import { useBreakpoints } from "@/hooks/use-media-query";
 import gsap from "gsap";
 import { Instagram, LucideIcon, Mail, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export interface Feature {
   name: string;

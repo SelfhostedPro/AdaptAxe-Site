@@ -1,16 +1,12 @@
 "use client";
 import { MainCanvas } from "@/components/3d/ViewCanvas";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense } from "react";
 import { Html, PerspectiveCamera, useProgress } from "@react-three/drei";
-import {
-  GuitarProvider,
-  useGuitar,
-} from "@/components/providers/GuitarProvider";
+import { GuitarProvider } from "@/components/providers/GuitarProvider";
 import { ExploreScene } from "./scene";
 
 // GSAP
 import { useSnapshot } from "valtio";
-import { GuitarState } from "@/store/guitar";
 import { Lighting } from "./scene/Lighting";
 import { Overlay } from "./content/overlay";
 import { SectionState } from "./store";
@@ -52,7 +48,7 @@ function _Explore() {
   const containerRef = useGuitarRefs().containerRef;
 
   return (
-    <main ref={containerRef} className="w-screen h-screen overflow-hidden main">
+    <main ref={containerRef} className="w-dvw h-dvh overflow-hidden main">
       {/* Background Layer */}
       <div className="fixed inset-0 pointer-events-none">
         {/* Text accents */}
@@ -67,7 +63,7 @@ function _Explore() {
 
       {/* Canvas Layer - Full viewport, above everything */}
       <div className="absolute top-0 left-0 z-20 ">
-        <MainCanvas eventSource={containerRef} className="w-screen h-screen">
+        <MainCanvas eventSource={containerRef} className="w-dvw h-dvh">
           <Suspense fallback={<Loader />}>
             <ExploreScene />
             <Lighting />

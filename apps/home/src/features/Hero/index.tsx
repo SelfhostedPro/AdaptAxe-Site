@@ -6,8 +6,7 @@ import { TitleText } from "./Title";
 import { Loading } from "@/components/utils/Loading";
 import { Model } from "@/components/models/Guitar";
 import {
-  GuitarProvider,
-  useGuitar,
+  GuitarProvider
 } from "@/components/providers/GuitarProvider";
 
 export function Hero() {
@@ -20,7 +19,6 @@ export function Hero() {
 
 export function WrappedHero() {
   const [perfSucks, degrade] = useState(false);
-  const { refs } = useGuitar();
   const materialProps = {
     toneMapped: false,
     color: "#000",
@@ -37,8 +35,7 @@ export function WrappedHero() {
             {/* <LoadedModel path="/models/hidden.obj" /> */}
             <Model
               home
-              active="none"
-              refs={refs}
+              active="thanks"
               primaryMaterial={<meshPhysicalMaterial {...materialProps} />}
               secondaryMaterial={<meshPhysicalMaterial {...materialProps} />}
             />

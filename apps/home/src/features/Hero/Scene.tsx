@@ -13,7 +13,7 @@ export function HeroScene({ children }: HeroSceneProps) {
   const childRef = useRef<Group>(null);
   const { mobile } = useBreakpoints();
 
-  useFrame((state, delta) => {
+  useFrame((state, _delta) => {
     if (!childRef.current) return;
     // childRef.current.rotation.y = clock.getElapsedTime() / 3
     const t = state.clock.getElapsedTime();

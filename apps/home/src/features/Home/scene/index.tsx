@@ -1,16 +1,9 @@
 "use client";
 import {
-  Float,
-  Html,
-  PerspectiveCamera,
-  Scroll,
-  useProgress,
+  Float
 } from "@react-three/drei";
-import { Suspense, useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 import { useGuitar } from "@/components/providers/GuitarProvider";
-import { Lighting } from "./Lighting";
-import type { PartType } from "@/constants";
 import { Controls } from "./Controls";
 import { useFrame, type ThreeElements } from "@react-three/fiber";
 import { useSnapshot } from "valtio";

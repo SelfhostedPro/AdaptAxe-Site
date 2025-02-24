@@ -4,17 +4,21 @@
  */
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "homepage",
+  "name": "adaptaxe",
   "main": ".open-next/worker.js",
   "compatibility_date": "2024-09-26",
   "compatibility_flags": ["nodejs_compat"],
   "minify": true,
   "assets": {
     "binding": "ASSETS",
-    "directory": ".open-next/assets"
+    "directory": ".open-next/assets",
   },
   "observability": {
-    "enabled": true
+    "enabled": true,
+  },
+  "dev": {
+    "port": 3000,
+    "ip": "0.0.0.0",
   },
   /**
    * Smart Placement
@@ -28,13 +32,6 @@
    * databases, object storage, AI inference, real-time communication and more.
    * https://developers.cloudflare.com/workers/runtime-apis/bindings/
    */
-
-  "kv_namespaces": [
-    {
-      "binding": "AdaptAxeKV",
-      "id": "5f89949299a54e4b833d547bfad9cb27"
-    }
-  ]
 
   /**
    * Environment Variables

@@ -35,17 +35,17 @@ export const SOCIALS = [
   {
     url: "https://www.instagram.com/adaptaxe/",
     icon: "instagram",
-    name: "instagram"
+    name: "instagram",
   },
   {
     url: "tel:+14428997309",
     icon: "phone",
-    name: "phone"
+    name: "phone",
   },
   {
     url: "mailto:stephen@adaptaxe.com",
     icon: "mail",
-    name: "email"
+    name: "email",
   },
 ];
 export const LINKS = [

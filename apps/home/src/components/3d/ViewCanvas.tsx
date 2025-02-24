@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, type CanvasProps } from "@react-three/fiber";
-import { Html, ScrollControls, View } from "@react-three/drei";
+import { ScrollControls, View } from "@react-three/drei";
 import { Suspense } from "react";
 import { useSnapshot } from "valtio";
 import { GuitarState } from "@/store/guitar";

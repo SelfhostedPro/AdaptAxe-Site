@@ -1,20 +1,14 @@
-'use client'
+"use client";
 import { type ReactNode } from "react";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
 import { useSnapshot } from "valtio";
 import { UIState } from "@/store/ui";
 
-import { useGuitar } from "@/components/providers/GuitarProvider";
 import { useBreakpoints } from "@/hooks/use-media-query";
 
-export function Controls({
-  children,
-}: {
-  children?: ReactNode;
-}) {
+export function Controls({ children }: { children?: ReactNode }) {
   const { mobile } = useBreakpoints();
   const usnap = useSnapshot(UIState);
-  const { refs } = useGuitar();
 
   return (
     <group position={[usnap.display ? 0 : 3.5, 0, 0]}>

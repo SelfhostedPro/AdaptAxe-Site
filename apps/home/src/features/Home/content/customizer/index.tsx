@@ -3,7 +3,7 @@ import { GuitarState } from "@/store/guitar";
 import { UIState } from "@/store/ui";
 import { useGSAP } from "@gsap/react";
 import { Card, CardContent } from "@workspace/ui/components/card";
-import { useRef, useState, useEffect, RefObject } from "react";
+import { useRef, useEffect, RefObject } from "react";
 import { useSnapshot } from "valtio";
 import { ControlButtons } from "./Buttons";
 import { ColorPicker } from "./ColorPicker";
