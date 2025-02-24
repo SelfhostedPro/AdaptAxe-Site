@@ -83,7 +83,7 @@ import {
               <div
                 className={cn(
                   "absolute bottom-5 p-8 mt-4 max-w-lg w-full",
-                  mobile || sm ? "mx-auto left-0 right-0" : "right-5"
+                  mobile ? "mx-auto left-0 right-0" : "right-5"
                 )}
               >
                 <Links />

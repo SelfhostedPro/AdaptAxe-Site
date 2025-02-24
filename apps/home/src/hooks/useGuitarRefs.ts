@@ -1,3 +1,4 @@
+"use client";
 import { useRef } from "react";
 import * as THREE from "three";
 
@@ -30,7 +31,7 @@ export function useGuitarRefs() {
   const carbonRods = useRef<THREE.Mesh>(null!);
   // const quickReleasePin = useRef<THREE.Mesh>(null);
 
-  const containerRef= useRef<HTMLDivElement>(null);
+  const containerRef= useRef<HTMLElement>(null!);
 
   return {
     groupRef,

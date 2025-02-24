@@ -3,7 +3,7 @@ import { OrbitControls, PerspectiveCamera, Bounds } from "@react-three/drei";
 import { useRef, type ReactNode } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 export interface HeroSceneProps {
   perfSucks?: boolean;
@@ -11,7 +11,7 @@ export interface HeroSceneProps {
 }
 export function HeroScene({ children }: HeroSceneProps) {
   const childRef = useRef<Group>(null);
-  const mobile = useIsMobile();
+  const { mobile } = useBreakpoints();
 
   useFrame((state, delta) => {
     if (!childRef.current) return;

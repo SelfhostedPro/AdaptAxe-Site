@@ -7,9 +7,9 @@ initOpenNextCloudflareForDev();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@workspace/ui", 'three'],
-  experimental: {
-    typedRoutes: true,
-  },
+  // experimental: {
+  //   typedRoutes: true,
+  // },
   eslint: {
     ignoreDuringBuilds: process.env.SKIP_LINTER === 'true'
   },

@@ -25,6 +25,7 @@ export function Socials({
             key={social.url}
             className="cursor-pointer"
             href={social.url}
+            target="_blank"
           >
             <span>
               {text ? (

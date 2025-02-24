@@ -14,10 +14,10 @@ import {
   Vector3,
 } from "@react-three/fiber";
 import * as THREE from "three";
-import { useIsMobile } from "@/hooks/use-mobile";
 import type { GLTF } from "three-stdlib";
 import { GuitarRefs } from "@/hooks/useGuitarRefs";
 import { useGuitar } from "../providers/GuitarProvider";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 type StyleType = "squared" | "filled";
 
@@ -61,10 +61,10 @@ export function Model({
     "https://assets.adaptaxe.com/guitar-transformed.glb"
   ) as GLTFResult;
   const three = useThree();
-  const mobile = useIsMobile();
+  const { mobile } = useBreakpoints();
 
   const baseProps = {
-    scale: scale ? scale : mobile ? 0.025 : 0.04,
+    scale: scale ? scale : 0.04,
     castShadow: true,
     recieveShadow: true,
   } as const;
@@ -108,28 +108,12 @@ export function Model({
           {secondaryMaterial}
         </mesh>
         <group ref={refs.carbonRods} rotation={[-Math.PI / 2, 0, 0]}>
-          <mesh position={[mobile ? 0.42 : 0.65, 0, mobile ? -0.45 : -0.7]}>
-            <cylinderGeometry
-              args={[
-                mobile ? 0.11 : 0.18,
-                mobile ? 0.11 : 0.18,
-                mobile ? 4 : 6.3,
-                32,
-                1,
-              ]}
-            />
+          <mesh position={[0.65, 0, -0.7]}>
+            <cylinderGeometry args={[0.18, 0.18, 6.3, 32, 1]} />
             <meshStandardMaterial color="Silver" />
           </mesh>
-          <mesh position={[mobile ? -0.42 : -0.65, 0, mobile ? -0.45 : -0.7]}>
-            <cylinderGeometry
-              args={[
-                mobile ? 0.11 : 0.18,
-                mobile ? 0.11 : 0.18,
-                mobile ? 4 : 6.3,
-                32,
-                1,
-              ]}
-            />
+          <mesh position={[-0.65, 0, -0.7]}>
+            <cylinderGeometry args={[0.18, 0.18, 6.3, 32, 1]} />
             <meshStandardMaterial color="Silver" />
           </mesh>
         </group>

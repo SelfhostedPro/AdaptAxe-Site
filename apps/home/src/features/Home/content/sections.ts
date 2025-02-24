@@ -3,19 +3,19 @@ import { OFFPAGE_DISTANCE, PartType } from "@/constants";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import gsap from "gsap";
 import { Instagram, LucideIcon, Mail, Phone } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-interface Feature {
+export interface Feature {
   name: string;
   icon?: LucideIcon;
   description: string;
   href?: string;
   onPointerEnter?: () => void;
   onPointerLeave?: () => void;
-  onClick?: () => void;
+  onClick?: (callback?: () => void) => void;
 }
 
-interface Section {
+export interface Section {
   title: string;
   class: PartType;
   content: string;
@@ -28,13 +28,20 @@ interface SectionsProps {
 
 export function useSections({ refs }: SectionsProps) {
   const tl = useRef<GSAPTimeline>(null);
-  const { lg } = useBreakpoints();
+  const { mobile } = useBreakpoints();
   const timeline = () => {
     if (!tl.current) {
       tl.current = gsap.timeline();
     }
     return tl.current;
   };
+  // Scale Factor for responsive animations
+  const [sf, setSf] = useState(1); // Default scale factor
+
+  useEffect(() => {
+    // Calculate scale factor on client side
+    setSf(Math.min(Math.max(window.innerWidth / 1260, 0.6), 1));
+  }, []);
   const sections: Section[] = [
     {
       title: "AdaptAxe",
@@ -74,34 +81,34 @@ export function useSections({ refs }: SectionsProps) {
           name: "Seamless Interchangeability",
           description:
             "Experiment with different body shapes and sizes to find your perfect fit and style",
-          onClick() {
+          onClick(callback) {
             refs.leftPlate.current &&
               timeline()
                 .to(refs.leftPlate.current.position, { x: 0.5 })
                 // Reset
-                .to(refs.leftPlate.current.position, { x: 0, delay: 2 }, ">");
+                .to(
+                  refs.leftPlate.current.position,
+                  { x: 0, delay: 2, onComplete: () => callback?.() },
+                  ">"
+                );
           },
         },
         {
           name: "Intuitive Stability",
           description:
             "Single place to easily lock to the center to prevent removal",
-          onClick() {
+          onClick(callback) {
             if (!refs.leftRef.current || !refs.highlightRef.current) return;
 
             timeline()
               .to(refs.leftRef.current.rotation, { z: -2.2 })
-              .to(
-                refs.leftRef.current.position,
-                { y: 8, x: lg ? 0 : -1.5 },
-                "<"
-              )
+              .to(refs.leftRef.current.position, { y: 8, x: 0 }, "<")
               .to(
                 refs.highlightRef.current.position,
                 {
-                  x: lg ? -1.29 : -2.8,
-                  y: lg ? -0.18 : -0.1,
-                  z: lg ? 10.3 : 9.4,
+                  x: mobile ? 0.5 : -1.29,
+                  y: -0.18,
+                  z: 10.3,
                 },
                 "<"
               )
@@ -117,7 +124,7 @@ export function useSections({ refs }: SectionsProps) {
               .to(refs.leftRef.current.rotation, { z: 0 })
               .to(
                 refs.leftRef.current.position,
-                { y: 0, x: lg ? 1.5 : 0 },
+                { y: 0, x: mobile ? 0 : 1.5, onComplete: () => callback?.() },
                 "<"
               );
           },
@@ -139,7 +146,7 @@ export function useSections({ refs }: SectionsProps) {
           name: "Electronics Plate",
           description:
             "Swappable electronics plate for streamlined wiring and easy access to controls",
-          onClick() {
+          onClick(callback) {
             if (!refs.rightPlate.current) return;
             timeline()
               .to(refs.rightPlate.current.position, { y: 0.4 })
@@ -152,6 +159,7 @@ export function useSections({ refs }: SectionsProps) {
                   y: 0,
                   x: 0,
                   delay: 2,
+                  onComplete: () => callback?.(),
                 },
                 ">"
               );
@@ -161,7 +169,7 @@ export function useSections({ refs }: SectionsProps) {
           name: "Intuitive Stability",
           description:
             "Single place to easily lock to the center to prevent removal",
-          onClick() {
+          onClick(callback) {
             if (!refs.rightRef.current || !refs.highlightRef.current) return;
 
             timeline()
@@ -169,7 +177,7 @@ export function useSections({ refs }: SectionsProps) {
               .to(refs.rightRef.current.position, { y: 6, x: 0 }, "<")
               .to(
                 refs.highlightRef.current.position,
-                { x: lg ? -1.89 : -1.6, y: 0.14, z: lg ? 8.2 : 7.4 },
+                { x: mobile ? -0.4 : -1.89, y: mobile ? 0.25 : 0.14, z: 8.2 },
                 ">"
               )
               .to(
@@ -184,7 +192,7 @@ export function useSections({ refs }: SectionsProps) {
               .to(refs.rightRef.current.rotation, { z: 0 })
               .to(
                 refs.rightRef.current.position,
-                { y: 0, x: lg ? -4 : -3 },
+                { y: 0, x: mobile ? -3 : -4, onComplete: () => callback?.() },
                 "<"
               );
           },
@@ -206,7 +214,7 @@ export function useSections({ refs }: SectionsProps) {
           name: "Seamless Interchangeability",
           description:
             "Shaped to enable string tension to lock in place while still allowing for toolless removal",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.groupRef.current ||
               !refs.neckRef.current ||
@@ -222,7 +230,7 @@ export function useSections({ refs }: SectionsProps) {
               )
               .to(refs.neckRef.current.position, {
                 x: 0,
-                y: lg ? 2 : 1.5,
+                y: mobile ? 3 : 2,
                 z: -OFFPAGE_DISTANCE + 0.2,
               })
               .to(refs.coreRef.current.position, { z: -OFFPAGE_DISTANCE }, "<")
@@ -230,8 +238,8 @@ export function useSections({ refs }: SectionsProps) {
               .to(
                 [refs.neckRef.current?.position],
                 {
-                  y: lg ? 4.7 : 3.65,
-                  z: lg ? -OFFPAGE_DISTANCE - 1.1 : -OFFPAGE_DISTANCE - 0.25,
+                  y: 4.7,
+                  z: -OFFPAGE_DISTANCE - 1.1,
                 },
                 "<"
               )
@@ -248,15 +256,15 @@ export function useSections({ refs }: SectionsProps) {
               .to(
                 [refs.neckRef.current?.position],
                 {
-                  y: lg ? 4.2 : 2.8,
-                  z: lg ? -OFFPAGE_DISTANCE - 1.1 : -OFFPAGE_DISTANCE - 0.25,
+                  y: 4.2,
+                  z: -OFFPAGE_DISTANCE - 1.1,
                 },
                 "<"
               )
               .to([refs.neckRef.current?.rotation], { x: 0 }, ">")
               .to(
                 [refs.neckRef.current?.position],
-                { y: lg ? 3.7 : 3.2, z: -OFFPAGE_DISTANCE },
+                { y: mobile ? 3.2 : 3.7, z: -OFFPAGE_DISTANCE },
                 "<"
               )
               .to(refs.groupRef.current.rotation, { z: 0 }, ">")
@@ -269,7 +277,7 @@ export function useSections({ refs }: SectionsProps) {
               )
               .to(
                 refs.groupRef.current.position,
-                { y: -OFFPAGE_DISTANCE },
+                { y: -OFFPAGE_DISTANCE, onComplete: () => callback?.() },
                 "<"
               );
           },
@@ -277,7 +285,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Alignment Tab",
           description: "Tab ensures neck is level once it rotates into place",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.highlightMatRef.current ||
               !refs.neckRef.current ||
@@ -291,7 +299,7 @@ export function useSections({ refs }: SectionsProps) {
               })
               .to(
                 refs.neckRef.current.position,
-                { x: lg ? -0.5 : -1.7, z: -OFFPAGE_DISTANCE - 1.4 },
+                { x: mobile ? 0 : -0.5, z: -OFFPAGE_DISTANCE - 1.4 },
                 "<"
               )
               .to(
@@ -301,7 +309,7 @@ export function useSections({ refs }: SectionsProps) {
               )
               .to(
                 refs.highlightRef.current.position,
-                { x: lg ? -0.68 : -1.81, y: -0.4, z: 8 },
+                { x: mobile ? 0 : -0.7 * sf, y: -0.4, z: 8 },
                 "<"
               )
               .to(
@@ -322,9 +330,10 @@ export function useSections({ refs }: SectionsProps) {
               .to(
                 refs.neckRef.current.scale,
                 {
-                  x: lg ? 0.04 : 0.025,
-                  y: lg ? 0.04 : 0.025,
-                  z: lg ? 0.04 : 0.025,
+                  x: 0.04,
+                  y: 0.04,
+                  z: 0.04,
+                  onComplete: () => callback?.(),
                 },
                 "<"
               );
@@ -347,7 +356,7 @@ export function useSections({ refs }: SectionsProps) {
           name: "Instant Tone Shaping",
           description:
             "Hotswap connectors enable players to swap their pickups and other electronics in seconds",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.pickup1.current ||
               !refs.pickup2.current ||
@@ -355,36 +364,52 @@ export function useSections({ refs }: SectionsProps) {
             )
               return;
             timeline()
-              .to(refs.pickup1.current.position, { x: lg ? -4 : -2.5 }, ">")
-              .to(refs.pickup3.current.position, { x: lg ? -4 : -2.5 }, "<33%")
+              .to(refs.groupRef.current.position, { x: 2 })
+              .to(refs.pickup1.current.position, { x: -4 }, "<")
+              .to(refs.pickup3.current.position, { x: -4 }, "<33%")
               .to(refs.pickup1.current.position, { x: 0, delay: 2 }, ">")
-              .to(refs.pickup3.current.position, { x: 0 }, "<33%");
+              .to(refs.groupRef.current.position, { x: 0 }, "<")
+              .to(
+                refs.pickup3.current.position,
+                { x: 0, onComplete: () => callback?.() },
+                "<33%"
+              );
           },
         },
         {
           name: "Get Creative",
           description:
             "Don't limit yourself to just pickups, put in on-board effects, batteries, anything you want connected to your wiring",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.pickup1.current ||
               !refs.pickup2.current ||
-              !refs.pickup3.current
+              !refs.pickup3.current ||
+              !refs.groupRef.current
             )
               return;
-            timeline().to(refs.pickup2.current.position, { x: lg ? -4 : -2.5 });
-            timeline().to(
+            timeline().to(refs.groupRef.current.position, { x: 2 }).to(
               refs.pickup2.current.position,
-              { x: 0, delay: 2 },
-              ">"
+              {
+                x: -4,
+              },
+              "<"
             );
+            // Reset
+            timeline()
+              .to(
+                refs.pickup2.current.position,
+                { x: 0, delay: 2, onComplete: () => callback?.() },
+                ">"
+              )
+              .to(refs.groupRef.current.position, { x: 0 }, "<");
           },
         },
         {
           name: "You've Got Options",
           description:
             "For a more stable platform with less points of failure, you can hardwire your electronics instead of using the hotswap system.",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.pickupRef.current ||
               !refs.pickup1.current ||
@@ -394,15 +419,22 @@ export function useSections({ refs }: SectionsProps) {
               return;
 
             timeline()
-              .to(refs.pickup1.current.position, { x: lg ? -4 : -2.5 }, ">")
-              .to(refs.pickup2.current.position, { x: lg ? -4 : -2.5 }, "<33%")
-              .to(refs.pickup3.current.position, { x: lg ? -4 : -2.5 }, "<33%")
+              .to(refs.pickup1.current.position, { x: -4 }, ">")
+              .to(refs.groupRef.current.position, { x: 2 }, "<")
+              .to(refs.pickup2.current.position, { x: -4 }, "<33%")
+              .to(refs.pickup3.current.position, { x: -4 }, "<33%")
               .to(refs.pickupRef.current.rotation, { x: -Math.PI }, ">")
 
+              // Reset
               .to(refs.pickupRef.current.rotation, { x: 0, delay: 2 }, ">")
               .to(refs.pickup1.current.position, { x: 0 }, ">")
+              .to(refs.groupRef.current.position, { x: 0 }, "<")
               .to(refs.pickup2.current.position, { x: 0 }, "<33%")
-              .to(refs.pickup3.current.position, { x: 0 }, "<33%");
+              .to(
+                refs.pickup3.current.position,
+                { x: 0, onComplete: () => callback?.() },
+                "<33%"
+              );
           },
         },
       ],
@@ -417,7 +449,7 @@ export function useSections({ refs }: SectionsProps) {
           name: "Stable Foundation",
           description:
             "Additional geometry allows for carbon fiber rods to be inserted for additional stability regardless of material",
-          onClick() {
+          onClick(callback) {
             if (
               !refs.carbonRods.current ||
               !refs.coreRef.current ||
@@ -427,12 +459,16 @@ export function useSections({ refs }: SectionsProps) {
             timeline()
               .to(refs.coreRef.current.rotation, {
                 x: -Math.PI / 2,
-                y: lg ? Math.PI / 8 : -Math.PI / 8,
+                y: mobile ? -Math.PI / 8 : Math.PI / 8,
               })
               .to(refs.carbonRods.current.position, { z: 3 }, ">")
 
               .to(refs.carbonRods.current.position, { z: 0, delay: 2 }, ">")
-              .to(refs.coreRef.current.rotation, { x: 0, y: 0 }, ">");
+              .to(
+                refs.coreRef.current.rotation,
+                { x: 0, y: 0, onComplete: () => callback?.() },
+                ">"
+              );
           },
         },
         {

@@ -1,6 +1,6 @@
 "use client";
 import { MainCanvas } from "@/components/3d/ViewCanvas";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Html, PerspectiveCamera, useProgress } from "@react-three/drei";
 import {
   GuitarProvider,
@@ -12,12 +12,12 @@ import { ExploreScene } from "./scene";
 import { useSnapshot } from "valtio";
 import { GuitarState } from "@/store/guitar";
 import { Lighting } from "./scene/Lighting";
-import { Underlay } from "./underlay";
+import { Overlay } from "./content/overlay";
 import { SectionState } from "./store";
-import { ProgressIndicator } from "./underlay/ProgressIndicator";
+import { ProgressIndicator } from "./content/ProgressIndicator";
 import { Parts } from "@/constants";
-import { TextAccents } from "./underlay/Accents";
-import { Customizer } from "./scene/Customizer";
+import { TextAccents } from "./content/accents/background";
+import { Customizer } from "./content/customizer";
 import { useGuitarRefs } from "@/hooks/useGuitarRefs";
 
 export default function Explore() {
@@ -50,23 +50,24 @@ function Loader() {
 function _Explore() {
   const ssnap = useSnapshot(SectionState);
   const containerRef = useGuitarRefs().containerRef;
+
   return (
     <main ref={containerRef} className="w-screen h-screen overflow-hidden main">
       {/* Background Layer */}
-      <div className="fixed inset-0 ">
+      <div className="fixed inset-0 pointer-events-none">
         {/* Text accents */}
         <TextAccents />
       </div>
 
       {/* Underlay Layer - Behind the canvas but above background */}
       <div className="absolute inset-0 z-30">
-        <Underlay />
+        <Overlay />
         <Customizer />
       </div>
 
       {/* Canvas Layer - Full viewport, above everything */}
-      <div className="absolute top-0 left-0 z-20 bg-white">
-        <MainCanvas eventSource={containerRef.current!} className="w-screen h-screen">
+      <div className="absolute top-0 left-0 z-20 ">
+        <MainCanvas eventSource={containerRef} className="w-screen h-screen">
           <Suspense fallback={<Loader />}>
             <ExploreScene />
             <Lighting />
@@ -81,7 +82,7 @@ function _Explore() {
         </MainCanvas>
       </div>
       {/* Progress Indicator - Always on top */}
-      <div className="fixed z-30 bottom-0 w-full p-8">
+      <div className="fixed z-40 bottom-0 w-full p-8">
         <ProgressIndicator
           currentSection={Parts.indexOf(ssnap.section)}
           totalSections={Parts.length}

@@ -4,15 +4,15 @@ import { OrbitControls, PresentationControls } from "@react-three/drei";
 import { useSnapshot } from "valtio";
 import { UIState } from "@/store/ui";
 
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useGuitar } from "@/components/providers/GuitarProvider";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 export function Controls({
   children,
 }: {
   children?: ReactNode;
 }) {
-  const mobile = useIsMobile();
+  const { mobile } = useBreakpoints();
   const usnap = useSnapshot(UIState);
   const { refs } = useGuitar();
 

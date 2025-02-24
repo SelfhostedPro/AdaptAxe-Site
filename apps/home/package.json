@@ -5,6 +5,7 @@
   "packageManager": "bun@1.2.2",
   "scripts": {
     "dev": "next dev",
+    "fast": "next dev --turbo",
     "build": "next build",
     "build:prod": "bun run opennext:build && wrangler deploy --dry-run --outdir=dist",
     "opennext:build": "export SKIP_LINTER=false && opennextjs-cloudflare",

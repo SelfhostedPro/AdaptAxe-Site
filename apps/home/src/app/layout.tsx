@@ -10,6 +10,7 @@ import {
   Geist_Mono,
   Outfit,
   JetBrains_Mono,
+  Chivo_Mono,
   Archivo_Black,
   Archivo,
   Source_Code_Pro,
@@ -18,6 +19,7 @@ import {
   Roboto_Flex,
   Roboto_Mono,
   Roboto,
+  Chivo,
 } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -66,7 +68,7 @@ export const metadata: Metadata = {
 
 // weight: ['100', '200', '300', '400', '500', '600', '700'],
 
-const fontSans = Roboto_Flex({
+const fontSans = Chivo({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -76,6 +78,7 @@ const fontMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -84,7 +87,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
+        className={`${fontSans.variable}  ${fontMono.variable} font-sans antialiased `}
         suppressHydrationWarning
       >
         <ThemeProvider>{children}</ThemeProvider>

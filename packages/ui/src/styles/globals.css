@@ -93,6 +93,148 @@
   }
 }
 
+@keyframes line-shadow {
+  0%,
+  100% {
+    transform: translateX(20vw);
+    width: 1px;
+  }
+  50% {
+    transform: translateX(-20vw);
+    width: 3px;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100%,
+  8%,
+  28%,
+  70%,
+  76% {
+    opacity: 0.4;
+  }
+  3%,
+  48%,
+  9% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.35;
+  }
+  7% {
+    opacity: 0.05;
+  }
+  20% {
+    opacity: 0.15;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  27% {
+    opacity: 0.05;
+  }
+  45% {
+    opacity: 0.35;
+  }
+  49% {
+    opacity: 0.32;
+  }
+  72% {
+    opacity: 0.15;
+  }
+  74% {
+    opacity: 0.37;
+  }
+  75% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes scale-from-center {
+  0%,
+  20% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes grid-motion {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: rotate(360deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes wipe-from-center {
+  0% {
+    /* clip-path: inset(50% 0); */
+    transform: scaleY(1.5);
+    filter: blur(10px);
+    opacity: 0;
+  }
+  90% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    /* clip-path: inset(0 0); */
+    transform: scaleY(1);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-from-left {
+  0% {
+    transform: translateX(
+      var(--slide-distance)
+    ); /* Distance from left-1 to left-8 */
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-from-left {
+  animation: slide-from-left 0.3s linear forwards;
+}
+
+.animate-wipe-from-center {
+  animation: wipe-from-center 0.6s linear forwards;
+}
+
+.animate-scale-from-center {
+  animation: scale-from-center 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center;
+}
+
+.animate-grid-motion {
+  animation: grid-motion 20s ease-in-out infinite;
+}
+
+.animate-flicker {
+  animation: flicker 0.5s;
+}
+
+.animate-grid-float-y {
+  animation: grid-float-y 25s ease-in-out infinite;
+}
+
 .animate-marquee-up {
   animation: marquee-up 40s linear infinite;
 }
@@ -140,6 +282,7 @@
   --color-sidebar: var(--sidebar-background);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --slide-distance: -24px;
 
   @keyframes accordion-down {
     from {
@@ -147,15 +290,6 @@
     }
     to {
       height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes marquee-down {
-    from {
-      transform: translateY(-50%);
-    }
-    to {
-      transform: translateY(0);
     }
   }
 }

@@ -17,16 +17,6 @@ const enterEnd = "center center";
 const exitStart = "center center";
 const exitEnd = "right 75%";
 
-// const baseIndent = {
-//   left: 0,
-//   right: 30,
-//   neck: 60,
-//   pickups: 90,
-//   core: 110,
-//   bridge: 140,
-//   thanks: 170,
-// };
-
 function createAnimation(
   name: string,
   enterFn: (props: AnimationProps) => gsap.core.Timeline,
@@ -46,6 +36,12 @@ function createAnimation(
         onStart: () => {
           SectionState.section = name as PartType;
         },
+        onReverseComplete:
+          name === "left"
+            ? () => {
+                SectionState.section = "explore";
+              }
+            : undefined,
       });
 
       // Add the animations to this timeline
@@ -61,16 +57,16 @@ function createAnimation(
           end: exitEnd,
           scrub: true,
           onEnterBack: () => (SectionState.section = name as PartType),
-          // markers: { indent: 20 },
         },
         // onStart: () => console.log(`${name} - Exit - Start`),
         // onComplete: () => console.log(`${name} - Exit - End`),
       });
 
-      if (exitFn) {
-        return tl.add(exitFn({ refs, lg, scrollTween }));
-      }
-      return tl.add(enterFn({ refs, lg, scrollTween }).reverse());
+      return tl.add(
+        exitFn
+          ? exitFn({ refs, lg, scrollTween })
+          : enterFn({ refs, lg, scrollTween }).reverse()
+      );
     },
   };
 }
@@ -82,7 +78,7 @@ const LeftAnimation = createAnimation(
       .timeline()
       .to(refs.groupRef.current.position, { y: -OFFPAGE_DISTANCE })
       .to(refs.leftRef.current.position, { z: -OFFPAGE_DISTANCE }, "<")
-      .to(refs.leftRef.current.position, { x: lg ? 1.5 : 0 }, ">");
+      .to(refs.leftRef.current.position, { x: 1.5 }, ">");
   },
   ({ refs, lg }) => {
     return gsap
@@ -155,7 +151,7 @@ const PickupsAnimation = createAnimation(
   ({ refs, lg }) => {
     return gsap
       .timeline()
-      .to(refs.pickupRef.current.position, { x: lg ? -4 : -3 }, ">");
+      .to(refs.pickupRef.current.position, { x: -4.5 }, ">");
   }
 );
 
@@ -166,7 +162,7 @@ const CoreAnimation = createAnimation(
       .timeline()
       .to(refs.pickupRef.current.position, { z: 0 })
       .to(refs.coreRef.current.position, { x: 0 }, ">")
-      .to(refs.pickupRef.current.position, { x: lg ? -4 : -3.5 }, "<");
+      .to(refs.pickupRef.current.position, { x: -4 }, "<");
   },
   ({ refs, lg }) => {
     return gsap

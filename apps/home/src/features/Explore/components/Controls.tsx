@@ -4,7 +4,7 @@ import { OrbitControls, PresentationControls } from "@react-three/drei";
 import { useSnapshot } from "valtio";
 import { UIState } from "@/store/ui";
 
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 export function Controls({
   children,
@@ -13,7 +13,7 @@ export function Controls({
   children?: ReactNode;
   refs: ReturnType<typeof import("@/hooks/useGuitarRefs").useGuitarRefs>;
 }) {
-  const mobile = useIsMobile();
+  const { mobile } = useBreakpoints();
   const usnap = useSnapshot(UIState);
   return (
     <group position={[usnap.display ? 0 : 3.5, 0, 0]}>

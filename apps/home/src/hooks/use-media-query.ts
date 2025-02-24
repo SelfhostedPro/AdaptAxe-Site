@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 const useIsomorphicLayoutEffect =
@@ -11,13 +12,46 @@ type UseMediaQueryOptions = {
 const IS_SERVER = typeof window === "undefined";
 
 export function useBreakpoints() {
-  return {
-    sm: useMediaQuery("(max-width: 640px)"),
-    md: useMediaQuery("(min-width: 768px)"),
-    mobile: useMediaQuery("(min-width: 768px)"),
-    lg: useMediaQuery("(min-width: 1024px)"),
-    desktop: useMediaQuery("(min-width: 1024px)"),
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const breakpoints = {
+    sm: useMediaQuery("(max-width: 640px)", {
+      defaultValue: false,
+      initializeWithValue: false,
+    }),
+    md: useMediaQuery("(min-width: 768px)", {
+      defaultValue: false,
+      initializeWithValue: false,
+    }),
+    mobile: useMediaQuery("(max-width: 768px)", {
+      defaultValue: false,
+      initializeWithValue: false,
+    }),
+    lg: useMediaQuery("(min-width: 1024px)", {
+      defaultValue: false,
+      initializeWithValue: false,
+    }),
+    desktop: useMediaQuery("(min-width: 1024px)", {
+      defaultValue: false,
+      initializeWithValue: false,
+    }),
   };
+
+  if (!mounted) {
+    return {
+      sm: false,
+      md: false,
+      mobile: false,
+      lg: false,
+      desktop: false,
+    };
+  }
+
+  return breakpoints;
 }
 
 /**
