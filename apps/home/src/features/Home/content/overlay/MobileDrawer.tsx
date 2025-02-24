@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useDragControls } from "framer-motion";
+import { motion, PanInfo, useDragControls } from "motion/react";
 import { cn } from "@workspace/ui/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
@@ -86,9 +86,26 @@ export const MobileDrawer = ({
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleDragEnd = (event: any, info: any) => {
+  const disableControllers = (
+    e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
+  ) => {
+    e?.stopPropagation();
+    ScrollTrigger.getById("container")?.disable(false, false);
+    Observer.getById("ios-observe")?.disable();
+  };
+  const enableControllers = (
+    e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
+  ) => {
+    e?.stopPropagation();
     ScrollTrigger.getById("container")?.enable(false, false);
     Observer.getById("ios-observe")?.enable();
+  };
+
+  const handleDragEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    enableControllers(event);
 
     if (isAnimating) return;
 
@@ -103,7 +120,7 @@ export const MobileDrawer = ({
   return (
     <motion.div
       ref={containerRef}
-      className="mt-auto overflow-hidden pointer-events-auto cursor-auto mx-10 absolute bottom-0"
+      className="mt-auto overflow-hidden pointer-events-auto cursor-auto mx-10 absolute bottom-0 overscroll-contain"
       initial={false}
       animate={{
         height: isExpanded ? maxHeight : minHeight,
@@ -115,7 +132,7 @@ export const MobileDrawer = ({
       }}
     >
       <motion.div
-        className="w-full h-full rounded-t-2xl bg-background/40 border-t-2 border-x-2 border-foreground/10 cursor-grab backdrop-blur-3xl active:cursor-grabbing flex flex-col px-1"
+        className="w-full h-full rounded-t-2xl bg-background/40 border-t-2 border-x-2 overscroll-contain border-foreground/10 cursor-grab backdrop-blur-3xl active:cursor-grabbing flex flex-col px-1"
         drag="y"
         dragControls={dragControls}
         dragConstraints={{
@@ -126,31 +143,30 @@ export const MobileDrawer = ({
         dragMomentum={false}
         onDragEnd={handleDragEnd}
         onDragStart={(e) => {
-          e.stopPropagation();
-          ScrollTrigger.getById("container")?.disable(false, false);
-          Observer.getById("ios-observe")?.disable();
+          disableControllers(e);
         }}
         onTap={() => setIsExpanded(!isExpanded)}
         onPointerDown={(e) => {
-          e.stopPropagation();
-          ScrollTrigger.getById("container")?.disable(false, false);
-          Observer.getById("ios-observe")?.disable();
-
+          disableControllers(e);
           dragControls.start(e);
         }}
         onPointerUp={(e) => {
-          ScrollTrigger.getById("container")?.enable(false, false);
-          Observer.getById("ios-observe")?.enable();
+          enableControllers();
         }}
       >
-        {/* Handle area */}
         <DrawerHandle isExpanded={isExpanded} />
-        {/* Content area */}
         <div
-          className="mx-4 flex-1 inline-block overflow-y-auto rounded-t-lg bg-background"
+          className="mx-4 flex-1 pb-4 inline-block cursor-auto overflow-y-auto rounded-t-lg bg-background"
           style={{
             height: `calc(${height} - 3rem)`,
             overscrollBehavior: "contain",
+          }}
+          onWheelCapture={(e) => e.stopPropagation()}
+          onPointerDownCapture={(e) => {
+            disableControllers(e);
+          }}
+          onPointerUpCapture={(e) => {
+            enableControllers(e);
           }}
         >
           {children}

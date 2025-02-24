@@ -41,7 +41,6 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
     () => {
       if (!gsnap.ready) return;
       // Set up GSAP animations
-      console.log("Setting up GSAP animations");
       timeline.current = gsap.timeline();
 
       // Setup Scroll Animations

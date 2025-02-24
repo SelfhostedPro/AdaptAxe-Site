@@ -2,7 +2,7 @@
 import { OFFPAGE_DISTANCE, PartType } from "@/constants";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import gsap from "gsap";
-import { Instagram, LucideIcon, Mail, Phone } from "lucide-react";
+import { Instagram, LucideIcon, Mail, NotebookPen, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -510,8 +510,10 @@ export function useSections({ refs }: SectionsProps) {
         "Thank you so much. I know your time is valuable and appreciate you taking the time to look through this.",
       features: [
         {
-          name: "Contact",
+          name: "Feedback",
+          icon: NotebookPen,
           description: "Be sure to reach out with any feedback or questions",
+          href: "https://forms.gle/FksvpzrdzSmAu7Ek7",
         },
         {
           name: "Instagram",
