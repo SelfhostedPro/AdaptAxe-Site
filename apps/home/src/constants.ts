@@ -5,7 +5,7 @@ export const SITE_DESCRIPTION =
 export const SITE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://saas-stack.startupstudio.dev";
+    : "https://adaptaxe.com";
 export const GITHUB_REPO_URL = "https://github.com/SelfhostedPro/AdaptAxe-Site";
 export const SITE_DOMAIN = new URL(SITE_URL).hostname;
 
