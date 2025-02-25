@@ -91,18 +91,14 @@ export function ExploreScene() {
               active={ssnap.section}
               primaryMaterial={
                 <meshPhysicalMaterial
-                  //@ts-expect-error Ref is usable here
                   color={snap.animatePrimary}
-                  //@ts-expect-error Ref is usable here
                   emissive={snap.animatePrimary}
                   {...primaryMaterialProps}
                 />
               }
               secondaryMaterial={
                 <meshPhongMaterial
-                  //@ts-expect-error Ref is usable here
                   color={snap.animateSecondary}
-                  //@ts-expect-error Ref is usable here
                   emissive={snap.animateSecondary}
                   {...backMaterialProps}
                 />
