@@ -118,7 +118,7 @@ const NeckAnimation = createAnimation(
       .to([refs.neckRef.current?.rotation], { x: -0.7 })
       .to(
         [refs.neckRef.current?.position],
-        { y: lg ? 4.5 : 2.7, z: lg ? -0.7 : -0.5 },
+        { y: lg ? 4.5 : 5, z: lg ? -0.7 : -0.5 },
         "<"
       )
       .to([refs.neckRef.current?.position], { y: 3 }, ">")
@@ -151,7 +151,7 @@ const PickupsAnimation = createAnimation(
   ({ refs }) => {
     return gsap
       .timeline()
-      .to(refs.pickupRef.current.position, { x: -4.5 }, ">");
+      .to(refs.pickupRef.current.position, { x: -OFFPAGE_DISTANCE }, ">");
   }
 );
 
@@ -160,39 +160,42 @@ const CoreAnimation = createAnimation(
   ({ refs }) => {
     return gsap
       .timeline()
-      .to(refs.pickupRef.current.position, { z: 0 })
+      .to(refs.pickupRef.current.position, { z: 0, x: 0 }, ">")
       .to(refs.coreRef.current.position, { x: 0 }, ">")
       .to(refs.pickupRef.current.position, { x: -4 }, "<");
   },
   ({ refs, lg }) => {
     return gsap
       .timeline()
-      .to(refs.pickupRef.current.position, { z: OFFPAGE_DISTANCE })
-      .to(refs.pickupRef.current.position, { x: 0 }, ">")
-      .to(
-        [
-          refs.groupRef.current.position,
-          refs.coreRef.current.position,
-          refs.pickupRef.current.position,
-          refs.bridgeRef.current.position,
-        ],
-        { z: 0 },
-        ">"
-      )
-      .to([refs.groupRef.current.position], { y: 0 }, "<")
-      .to([refs.neckRef.current?.rotation], { x: -0.7 })
-      .to(
-        [refs.neckRef.current?.position],
-        { y: lg ? 4.5 : 2.7, z: lg ? -0.95 : -0.5 },
-        "<"
-      )
-      .to([refs.neckRef.current?.position], { y: lg ? 4.2 : 3 }, ">")
-      .to([refs.neckRef.current?.rotation], { x: 0 }, ">")
+      .to(refs.coreRef.current.position, {
+        z: OFFPAGE_DISTANCE,
+      });
+    // .to(refs.pickupRef.current.position, { z: OFFPAGE_DISTANCE })
+    // .to(refs.pickupRef.current.position, { x: 0 }, ">");
+    // .to(
+    //   [
+    //     refs.groupRef.current.position,
+    //     refs.coreRef.current.position,
+    //     refs.pickupRef.current.position,
+    //     refs.bridgeRef.current.position,
+    //   ],
+    //   { z: 0 },
+    //   ">"
+    // )
+    // .to([refs.groupRef.current.position], { y: 0 }, "<")
+    // .to([refs.neckRef.current?.rotation], { x: -0.7 })
+    // .to(
+    //   [refs.neckRef.current?.position],
+    //   { y: lg ? 4.5 : 2.7, z: lg ? -0.95 : -0.5 },
+    //   "<"
+    // )
+    // .to([refs.neckRef.current?.position], { y: lg ? 4.2 : 3 }, ">")
+    // .to([refs.neckRef.current?.rotation], { x: 0 }, ">")
 
-      .to([refs.neckRef.current?.position], { y: 0 }, "<")
-      .to([refs.neckRef.current?.position], { z: 0.3 }, "<")
+    // .to([refs.neckRef.current?.position], { y: 0 }, "<")
+    // .to([refs.neckRef.current?.position], { z: 0.3 }, "<")
 
-      .to([refs.neckRef.current?.position], { z: 0 }, "<60%");
+    // .to([refs.neckRef.current?.position], { z: 0 }, "<60%");
   }
 );
 
@@ -202,7 +205,15 @@ const BridgeAnimation = createAnimation(
     return gsap
       .timeline()
       .to(refs.bridgeRef.current.position, { z: OFFPAGE_DISTANCE / 1.2 })
-      .to(refs.groupRef.current.position, { y: OFFPAGE_DISTANCE }, "<");
+      .to(refs.groupRef.current.position, { y: OFFPAGE_DISTANCE }, "<")
+      .to(
+        [
+          refs.coreRef.current.position,
+          refs.pickupRef.current.position,
+          refs.neckRef.current.position,
+        ],
+        { z: 0, x: 0, y: 0 }, '<'
+      );
   },
   ({ refs }) => {
     return gsap

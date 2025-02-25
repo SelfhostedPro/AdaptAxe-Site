@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, PanInfo, useDragControls } from "motion/react";
 import { cn } from "@workspace/ui/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -91,6 +91,26 @@ export const MobileDrawer = ({
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Subtle pulse animation when the page loads to draw attention
+    if (containerRef.current) {
+      gsap.to(containerRef.current, {
+        y: -10,
+        duration: 0.5,
+        repeat: 3,
+        yoyo: true,
+        ease: "power2.inOut",
+        delay: 2, // Wait for initial page load
+      });
+    }
+  }, []);
+
+  const triggerHapticFeedback = () => {
+    if (navigator.vibrate) {
+      navigator.vibrate(20);
+    }
+  };
+
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -135,7 +155,10 @@ export const MobileDrawer = ({
         onDragStart={(e) => {
           disableControllers(e);
         }}
-        onTap={() => setIsExpanded(!isExpanded)}
+        onTap={() => {
+          triggerHapticFeedback();
+          setIsExpanded(!isExpanded);
+        }}
         onPointerDown={(e) => {
           disableControllers(e);
           dragControls.start(e);
@@ -157,6 +180,14 @@ export const MobileDrawer = ({
           }}
           onPointerUpCapture={(e) => {
             enableControllers(e);
+          }}
+          onTouchStartCapture={(e) => {
+            // Allow default touch behavior for scrolling
+            e.stopPropagation();
+          }}
+          onTouchMoveCapture={(e) => {
+            // Allow the default scrolling behavior
+            e.stopPropagation();
           }}
         >
           {children}

@@ -35,8 +35,11 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
   const { active, progress } = useProgress();
   // const [currentIndex, setCurrentIndex] = useState<number>(0);
   const animating = useRef(false);
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  const { mobile } = useBreakpoints();
   useGSAP(
     () => {
       if (!gsnap.ready) return;
@@ -49,7 +52,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       // Use appropriate scroll controller
       const scrollTween = isMobile
         ? useMobileScroll(sections, animating)
-        : useDesktopScroll(sections);
+        : useDesktopScroll(sections, mobile ? 200 : 100);
 
       const contents = gsap.utils.toArray(".content");
       contents.forEach((content, i) => {

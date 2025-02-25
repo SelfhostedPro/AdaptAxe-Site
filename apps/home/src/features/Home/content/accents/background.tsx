@@ -53,7 +53,7 @@ const ScrollIndicator = () => {
         }}
         className="transition-all font-mono text-foreground/80 text-xs"
       >
-        SCROLL DOWN {">>>"}
+        {mobile ? "SWIPE" : "SCROLL"} DOWN {">>>"}
       </div>
     </div>
   );

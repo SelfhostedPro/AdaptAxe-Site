@@ -19,8 +19,9 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@react-three/drei": "https://pkg.csb.dev/pmndrs/drei/commit/82409404/@react-three/drei",
-    "@react-three/fiber": "9.0.0-rc.7",
+    "@react-three/drei": "^10.0.2",
+    "@react-three/fiber": "^9.0.4",
+    "@react-three/postprocessing": "^3.0.4",
     "@workspace/ui": "workspace:*",
     "gsap": "^3.12.7",
     "lucide-react": "^0.475.0",

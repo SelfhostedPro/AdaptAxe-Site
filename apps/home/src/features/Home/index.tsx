@@ -29,17 +29,28 @@ export default function Explore() {
 function Loader() {
   const { progress } = useProgress();
   return (
-    <Html center>
-      <div className="flex flex-col items-center space-y-4">
-        <div className="text-4xl font-bold tracking-tighter">
-          {Math.round(progress)}%
+    <Html fullscreen>
+      <div className="absolute h-screen w-screen flex flex-col items-center space-y-4 z-50">
+        <div className="text-4xl font-bold tracking-tighter font-mono">
+          <span
+            style={{
+              borderRight: "2px solid white",
+              paddingRight: "0.2rem",
+              animation: "cursor-blink 1s infinite",
+            }}
+          >
+            {Math.round(progress)}%
+          </span>
         </div>
-        <div className="w-48 h-[1px] bg-white/20">
+        <div className="w-48 h-[2px] bg-white/20">
           <div
-            className="h-full bg-white transition-all duration-300"
+            className="h-full bg-white transition-all duration-300 relative"
             style={{ width: `${progress}%` }}
-          />
+          >
+            <div className="absolute right-0 w-1 h-2 bg-white top-1/2 transform -translate-y-1/2"></div>
+          </div>
         </div>
+        <div className="text-xs text-white/60 font-mono">LOADING ADAPTAXE</div>
       </div>
     </Html>
   );
@@ -69,19 +80,19 @@ function _Explore() {
         <MainCanvas eventSource={containerRef} className="w-dvw h-dvh">
           <Suspense fallback={<Loader />}>
             <ExploreScene />
-            <Lighting />
-            <PerspectiveCamera
-              fov={35}
-              position={[0, 0, 20]}
-              near={1}
-              far={28}
-              makeDefault
-            />
           </Suspense>
+
+          <Lighting />
+          <PerspectiveCamera
+            fov={35}
+            position={[0, 0, 20]}
+            near={1}
+            far={28}
+            makeDefault
+          />
         </MainCanvas>
       </div>
       {/* Progress Indicator - Always on top */}
-
     </main>
   );
 }

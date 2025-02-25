@@ -19,6 +19,8 @@ const state = proxy({
     "DarkSlateBlue",
     "SlateGray",
   ],
+  animatePrimary: "Firebrick",
+  animateSecondary: "#121212",
   primary: "Firebrick",
   secondary: "#121212",
   style: "squared",

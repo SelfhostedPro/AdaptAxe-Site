@@ -1,8 +1,6 @@
 "use client";
-import {
-  Float
-} from "@react-three/drei";
-import { useRef } from "react";
+import { Float } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Controls } from "./Controls";
 import { useFrame, type ThreeElements } from "@react-three/fiber";
@@ -13,6 +11,14 @@ import { easing } from "maath";
 import dynamic from "next/dynamic";
 import { SectionState } from "../store";
 import { useBreakpoints } from "@/hooks/use-media-query";
+import {
+  EffectComposer,
+  Bloom,
+  DepthOfField,
+} from "@react-three/postprocessing";
+import { DepthOfFieldEffect, BloomEffect } from "postprocessing";
+import { OFFPAGE_DISTANCE } from "@/constants";
+import gsap from "gsap";
 
 // Needed to prevent ProgressEvent Error
 const Guitar = dynamic(
@@ -25,8 +31,30 @@ export function ExploreScene() {
   const ssnap = useSnapshot(SectionState);
   const primaryColor = useRef(new THREE.Color(snap.primary));
   const secondaryColor = useRef(new THREE.Color(snap.secondary));
+  const parentRef = useRef<ThreeElements["group"]>(null);
   const { refs } = useGuitar();
   const { mobile } = useBreakpoints();
+
+  useEffect(() => {
+    if (snap.ready && parentRef.current) {
+      // Start slide-in animation when model is ready
+      gsap.set(parentRef.current.position as [number, number, number], {
+        x: mobile ? -OFFPAGE_DISTANCE : OFFPAGE_DISTANCE,
+        onComplete: () => {
+          parentRef.current!.visible = true;
+        },
+      });
+      gsap.fromTo(
+        parentRef.current.position as [number, number, number],
+        { x: mobile ? -OFFPAGE_DISTANCE : OFFPAGE_DISTANCE },
+        {
+          x: 0,
+          duration: 1.5,
+          ease: "power4.inOut",
+        }
+      );
+    }
+  }, [snap.ready, parentRef.current]);
 
   const backMaterialProps: ThreeElements["meshPhongMaterial"] = {
     toneMapped: false,
@@ -52,21 +80,13 @@ export function ExploreScene() {
   });
 
   // Scale Factor
-  const sf = Math.min(
-    Math.max(window.innerWidth / 1260, 0.6),
-    1
-  );
+  const sf = Math.min(Math.max(window.innerWidth / 1260, 0.6), 1);
 
   return (
     <>
-      {/* <Scroll html>
-        <div className="w-full h-full">
-          <Overlay refs={refs} overlayRef={overlayRef} />
-        </div>
-      </Scroll> */}
       <Controls>
         <Float enabled={ssnap.section === "thanks"}>
-          <group position={mobile ? [-3.5, -0.2, 0] : [0, 0, 0]} scale={1 * sf}>
+          <group ref={parentRef} visible={false} scale={1 * sf}>
             <Guitar
               active={ssnap.section}
               primaryMaterial={

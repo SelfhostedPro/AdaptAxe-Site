@@ -11,7 +11,8 @@ export function Controls({ children }: { children?: ReactNode }) {
   const usnap = useSnapshot(UIState);
 
   return (
-    <group position={[usnap.display ? 0 : 3.5, 0, 0]}>
+    // [-3.5, -0.2, 0] : [0, 0, 0]
+    <group position={[usnap.display ? 0 : mobile ? 0 : 3.5, 0, 0]}>
       <PresentationControls
         enabled={!usnap.display && !mobile}
         snap

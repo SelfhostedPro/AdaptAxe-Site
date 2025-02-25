@@ -145,7 +145,7 @@ const SectionContainer = ({
             <MobileDrawer
               isExpanded={isExpanded}
               setIsExpanded={setIsExpanded}
-              minHeight="15dvh"
+              minHeight="18dvh"
               maxHeight="70dvh"
             >
               <div className="space-y-4">
@@ -187,6 +187,7 @@ export function Overlay() {
   const gsnap = useSnapshot(GuitarState);
   const usnap = useSnapshot(UIState);
   const sections = useSections({ refs });
+  const { mobile } = useBreakpoints();
 
   return (
     <>
@@ -200,7 +201,8 @@ export function Overlay() {
         <div
           className={cn(
             "scroll-container",
-            "flex flex-row relative h-full w-full"
+            "flex flex-row relative h-full w-full",
+            mobile ? "gap-[100vw]" : "gap-0"
           )}
         >
           {sections.map((section, index) => (

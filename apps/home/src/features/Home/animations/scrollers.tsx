@@ -22,29 +22,30 @@ export const enableControllers = (
 
 // Separate scroll controller implementations
 export const useDesktopScroll = (
-  sections: Element[]
+  sections: Element[],
+  percent: number
   //   onSectionChange: (index: number) => void
 ) => {
   return gsap.to(sections, {
     id: "container",
-    xPercent: () => -100 * (sections.length - 1),
+    xPercent: () => -percent * (sections.length - 1),
     ease: "none",
     scrollTrigger: {
       trigger: ".scroll-container",
       pin: true,
       pinSpacing: true,
-      scrub: true,
+      scrub: 0.9,
       invalidateOnRefresh: true,
       snap: {
-        snapTo: directionalSnap(1 / (sections.length - 1), 0.4),
+        snapTo: directionalSnap(1 / (sections.length - 1), 0.3),
         delay: 0,
         inertia: false,
-        duration: { min: 0.2, max: 0.5 },
+        duration: { min: 0.1, max: 0.3 }, // Faster snap duration
         ease: "none",
         directional: true,
       },
       start: "left left",
-      end: () => `+=${sections.length * 100}%`,
+      end: () => `+=${sections.length * percent}%`,
       onUpdate: (self) => {
         // onSectionChange(Math.round(self.progress * (sections.length - 1)));
       },
@@ -59,7 +60,7 @@ export const useMobileScroll = (
   const timeline = gsap
     .timeline()
     .to(sections, {
-      xPercent: () => -100 * (sections.length - 1),
+      xPercent: () => -200 * (sections.length - 1),
       ease: "none",
       duration: sections.length - 1,
     })

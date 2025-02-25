@@ -7,10 +7,7 @@ import { useGLTF, useProgress } from "@react-three/drei";
 import type { PartType } from "@/constants";
 import { useSnapshot } from "valtio/react";
 import { GuitarState } from "@/store/guitar";
-import {
-  useThree,
-  Vector3
-} from "@react-three/fiber";
+import { useThree, Vector3 } from "@react-three/fiber";
 import * as THREE from "three";
 import type { GLTF } from "three-stdlib";
 import { useGuitar } from "../providers/GuitarProvider";
@@ -87,7 +84,6 @@ export function Model({
   };
 
   useEffect(() => {
-    // Only set ready when both the model is loaded AND refs are set
     if (progress === 100 && refs.groupRef.current) {
       GuitarState.ready = true;
     }

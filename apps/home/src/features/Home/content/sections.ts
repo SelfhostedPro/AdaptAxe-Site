@@ -54,12 +54,12 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Limitless Customization",
           description:
-            "Transform your guitar's sound and style in seconds without any tools. Swap out modules to craft your ideal instrument for any genre or mood.",
+            "Transform your sound and style in seconds without any tools. Swap out modules to craft your ideal instrument for any genre or performance",
         },
         {
           name: "Effortless Playability",
           description:
-            "Customize the shape to offer optimal comfort with a design that prioritizes both form and function for your unique ergonomics",
+            "Customize the shape to your exact preferences for optimal comfort with a design that perfectly balances form and function for your unique playing style",
         },
         {
           name: "Unmatched Versatility",
@@ -69,7 +69,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Constant Evolution",
           description:
-            "Unleash your creativity and discover a world of sonic possibilities with a guitar that evolves alongside your musical journey",
+            "Unleash your creativity with a guitar that evolves alongside your musical journey",
         },
       ],
     },
@@ -77,7 +77,7 @@ export function useSections({ refs }: SectionsProps) {
       title: "Left Body",
       class: "left",
       content:
-        "Allows users to change their style and offers a place for innovative new features",
+        "Customize your look and unlock innovative features with easily interchangeable components",
       features: [
         {
           name: "Seamless Interchangeability",
@@ -98,7 +98,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Intuitive Stability",
           description:
-            "Single place to easily lock to the center to prevent removal",
+            "Single place to easily secure to the center frame for worry-free performance",
           onClick(callback) {
             if (!refs.leftRef.current || !refs.highlightRef.current) return;
 
@@ -134,7 +134,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Intelligent Connectivity",
           description:
-            "Cable channels in the center allow electronics to easily be embedded and connected to the rest of the guitar",
+            "Cable channels in the center allow electronics to easily be embedded and connected throughout the instrument",
         },
       ],
     },
@@ -142,12 +142,12 @@ export function useSections({ refs }: SectionsProps) {
       title: "Right Body",
       class: "right",
       content:
-        "A core part of the experience for your users in a package you already know how to work with",
+        "Experience familiar functionality with innovative modularity in a package that feels instantly comfortable",
       features: [
         {
           name: "Electronics Plate",
           description:
-            "Swappable electronics plate for streamlined wiring and easy access to controls",
+            "Change your electronics configuration with a swappable control plate that provides clean wiring and easy access",
           onClick(callback) {
             if (!refs.rightPlate.current) return;
             timeline()
@@ -170,7 +170,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Intuitive Stability",
           description:
-            "Single place to easily lock to the center to prevent removal",
+            "Single place to easily secure to the center frame for worry-free performance",
           onClick(callback) {
             if (!refs.rightRef.current || !refs.highlightRef.current) return;
 
@@ -202,7 +202,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Protection",
           description:
-            "Can be designed as a sealed package to prevent users from disassembling promotional models",
+            "Optional sealed design prevents disassembly for demonstration or rental models while maintaining full functionality",
         },
       ],
     },
@@ -210,12 +210,12 @@ export function useSections({ refs }: SectionsProps) {
       title: "Neck Block",
       class: "neck",
       content:
-        "An innovative shape that enables tool-less modularity while maintaining stability",
+        "Revolutionary design enables tool-free neck changes while maintaining rock-solid stability and perfect alignment",
       features: [
         {
           name: "Seamless Interchangeability",
           description:
-            "Shaped to enable string tension to lock in place while still allowing for toolless removal",
+            "Innovative design uses string tension to lock the neck securely in place while allowing tool-free removal when needed",
           onClick(callback) {
             if (
               !refs.groupRef.current ||
@@ -286,7 +286,7 @@ export function useSections({ refs }: SectionsProps) {
         },
         {
           name: "Alignment Tab",
-          description: "Tab ensures neck is level once it rotates into place",
+          description: "Precision alignment ensures the neck sits perfectly level once rotated into position",
           onClick(callback) {
             if (
               !refs.highlightMatRef.current ||
@@ -344,20 +344,20 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Compatibility",
           description:
-            "Hole pattern designed to be compatible with a verity of back plates",
+            "Universal mounting pattern accommodates a wide variety of back plates for maximum flexibility",
         },
       ],
     },
     {
-      title: "Pickups",
+      title: "Tone Modules",
       class: "pickup",
       content:
-        "Enable users to achieve the tone they want with endless options for pickups, accessories, and anything else you want your players want to have easy access to.",
+        "Achieve your ideal tone with endless options for pickups and accessories that can be swapped in moments",
       features: [
         {
           name: "Instant Tone Shaping",
           description:
-            "Hotswap connectors enable players to swap their pickups and other electronics in seconds",
+            "Hotswap connectors let you swap pickups and electronics in second",
           onClick(callback) {
             if (
               !refs.pickup1.current ||
@@ -381,7 +381,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "Get Creative",
           description:
-            "Don't limit yourself to just pickups, put in on-board effects, batteries, anything you want connected to your wiring",
+            "Go beyond traditional pickups with slots for onboard effects, batteries, or any electronics you want integrated into your instrument",
           onClick(callback) {
             if (
               !refs.pickup1.current ||
@@ -410,7 +410,7 @@ export function useSections({ refs }: SectionsProps) {
         {
           name: "You've Got Options",
           description:
-            "For a more stable platform with less points of failure, you can hardwire your electronics instead of using the hotswap system.",
+            "For maximum reliability, choose between hot-swappable connections or traditional hardwired electronics—the choice is yours",
           onClick(callback) {
             if (
               !refs.pickupRef.current ||
@@ -445,12 +445,12 @@ export function useSections({ refs }: SectionsProps) {
       title: "Core",
       class: "core",
       content:
-        "The core houses essential components and provides a solid base for customization",
+        "The heart of the AdaptAxe system provides a rock-solid foundation while enabling unlimited customization possibilities",
       features: [
         {
           name: "Stable Foundation",
           description:
-            "Additional geometry allows for carbon fiber rods to be inserted for additional stability regardless of material",
+            "Channels accommodate carbon fiber reinforcement rods for exceptional stability regardless of your chosen materials",
           onClick(callback) {
             if (
               !refs.carbonRods.current ||
@@ -474,32 +474,32 @@ export function useSections({ refs }: SectionsProps) {
           },
         },
         {
-          name: "Adaptable Wiring",
+          name: "Flexible Wiring",
           description:
-            "Wiring channels throughout the body enable you to easily route cables wherever they're needed",
+            "Integrated wiring channels throughout the body make cable routing clean and simple for any configuration you can imagine",
         },
       ],
     },
     {
-      title: "Bridge Mount",
+      title: "Bridge System",
       class: "bridge",
       content:
-        "Swappable bridge mounts enable players to tailor their guitar to their preferences",
+        "Swappable bridge mounts let players customize their playing experience from tremolo to fixed bridge with minimal effort",
       features: [
         {
           name: "Experiment Faster",
           description:
-            "Use a quick release pin to keep things together while you're experamenting",
+            "Quick-release pin system keeps components secure while you're exploring different setups and configurations",
         },
         {
           name: "Sturdy",
           description:
-            "Switch over to screws for additional stability once you're ready for a show",
+            "Optional screw mounting provides additional stability for performance and recording scenarios",
         },
         {
           name: "Compatibility",
           description:
-            "The bridge mount accommodates a wide range of guitar bridges, including Floyd Rose and Hard Tail styles.",
+            "Universal design accommodates virtually any guitar bridge style, from Floyd Rose to Hard Tail and everything in between",
         },
       ],
     },
@@ -507,12 +507,12 @@ export function useSections({ refs }: SectionsProps) {
       title: "Thanks",
       class: "thanks",
       content:
-        "Thank you so much. I know your time is valuable and appreciate you taking the time to look through this.",
+        "Thank you so much. I know your time is valuable and appreciate you taking the time to explore the AdaptAxe system",
       features: [
         {
           name: "Feedback",
           icon: NotebookPen,
-          description: "Be sure to reach out with any feedback or questions",
+          description: "Share your thoughts, questions, or suggestions",
           href: "https://forms.gle/FksvpzrdzSmAu7Ek7",
         },
         {
