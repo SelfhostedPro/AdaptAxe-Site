@@ -79,7 +79,7 @@ export function TextAccents() {
         style={leftAccentStyle}
         className="text-xs font-mono text-foreground/40"
       >
-        2K25///RNG
+        2K25///EST
       </span>
       <span
         style={leftAccentStyle}
@@ -97,24 +97,21 @@ export function TextAccents() {
         style={leftAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-lr] [text-orientation: sideways]"
       >
-        LONG:74.0060°W
+        SWAP_TIME:SEC
       </span>
       <span
         style={leftAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-lr] [text-orientation: sideways]"
       >
-        TEMP:22.5°C
+        TEMP:UNKNOWN
       </span>
       <span
         style={leftAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-lr] [text-orientation: sideways]"
       >
         MODE:
-        <span
-          className="transition-colors duration-200"
-          style={{ color: snap.primary, opacity: 40 }}
-        >
-          ACTIVE
+        <span style={{ color: snap.animatePrimary, opacity: 40 }} className="uppercase">
+          {snap.style}
         </span>
       </span>
     </div>
@@ -131,7 +128,7 @@ export function TextAccents() {
         style={rightAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-rl] [text-orientation: sideways]"
       >
-        LAT:40.7128°N
+        PKUP_CFG:HOT_SWAP
       </span>
       <span
         style={rightAccentStyle}
@@ -143,20 +140,22 @@ export function TextAccents() {
         style={rightAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-rl] [text-orientation: sideways]"
       >
-        ALT:128M
+        RODS:CRBN
       </span>
       <span
         style={rightAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-rl] [text-orientation: sideways]"
       >
-        HUM:65%
+        HUM:UNKNOWN
       </span>
       <span
         style={rightAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-rl] [text-orientation: sideways]"
       >
         SYS:
-        <span style={{ color: snap.primary, opacity: 0.4 }}>NOMINAL</span>
+        <span style={{ color: snap.animatePrimary, opacity: 0.4 }}>
+          NOMINAL
+        </span>
       </span>
     </div>
   );
@@ -266,20 +265,20 @@ export function TextAccents() {
 
       {/* Dynamic color strip accents */}
       <div
-        className="absolute top-0 left-0 w-1 h-32 transition-colors duration-200 z-20"
-        style={{ background: snap.primary }}
+        className="absolute top-0 left-0 w-1 h-32 z-20"
+        style={{ background: snap.animatePrimary }}
       />
       <div
-        className="absolute top-0 right-0 w-32 h-1 transition-colors duration-200 z-20"
-        style={{ background: snap.primary }}
+        className="absolute top-0 right-0 w-32 h-1 z-20"
+        style={{ background: snap.animatePrimary }}
       />
       <div
-        className="absolute bottom-0 left-0 w-1 h-32 transition-colors duration-200 z-20"
-        style={{ background: snap.primary }}
+        className="absolute bottom-0 left-0 w-1 h-32 z-20"
+        style={{ background: snap.animatePrimary }}
       />
       <div
-        className="absolute bottom-0 right-0 w-32 h-1 transition-colors duration-200 z-20"
-        style={{ background: snap.primary }}
+        className="absolute bottom-0 right-0 w-32 h-1 z-20"
+        style={{ background: snap.animatePrimary }}
       />
 
       {/* Colored Text Accents */}

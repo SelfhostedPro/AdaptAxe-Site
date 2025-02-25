@@ -19,7 +19,7 @@ type BodyRefs = Record<string, RefObject<THREE.Group | THREE.Mesh | null>>;
 export function Customizer() {
   const gsnap = useSnapshot(GuitarState);
   const usnap = useSnapshot(UIState);
-  const ssnap = useSnapshot(SectionState)
+  const ssnap = useSnapshot(SectionState);
   const { refs } = useGuitar();
   const tl = useRef<GSAPTimeline>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ export function Customizer() {
               stateKey="secondary"
             />
           </CardContent>
-          <CardContent>
+          <CardContent className="p-2">
             <StyleSelector />
           </CardContent>
         </Card>

@@ -72,12 +72,12 @@ export function ExploreScene() {
     envMapIntensity: 1,
   };
 
-  useFrame((_, delta) => {
-    // @ts-expect-error Ref is usable here
-    easing.dampC(primaryColor, snap.primary, 0.25, delta);
-    // @ts-expect-error Ref is usable here
-    easing.dampC(secondaryColor, snap.secondary, 0.25, delta);
-  });
+  // useFrame((_, delta) => {
+  //   // @ts-expect-error Ref is usable here
+  //   easing.dampC(primaryColor, snap.primary, 0.25, delta);
+  //   // @ts-expect-error Ref is usable here
+  //   easing.dampC(secondaryColor, snap.secondary, 0.25, delta);
+  // });
 
   // Scale Factor
   const sf = Math.min(Math.max(window.innerWidth / 1260, 0.6), 1);
@@ -92,18 +92,18 @@ export function ExploreScene() {
               primaryMaterial={
                 <meshPhysicalMaterial
                   //@ts-expect-error Ref is usable here
-                  color={primaryColor}
+                  color={snap.animatePrimary}
                   //@ts-expect-error Ref is usable here
-                  emissive={primaryColor}
+                  emissive={snap.animatePrimary}
                   {...primaryMaterialProps}
                 />
               }
               secondaryMaterial={
                 <meshPhongMaterial
                   //@ts-expect-error Ref is usable here
-                  color={secondaryColor}
+                  color={snap.animateSecondary}
                   //@ts-expect-error Ref is usable here
-                  emissive={secondaryColor}
+                  emissive={snap.animateSecondary}
                   {...backMaterialProps}
                 />
               }

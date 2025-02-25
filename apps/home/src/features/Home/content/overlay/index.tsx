@@ -54,13 +54,13 @@ const FeatureItem = ({ feature }: { feature: Feature }) => {
     <FeatureItemContainer feature={feature}>
       <div
         className="w-[2px] mr-2 self-stretch shrink-0"
-        style={{ background: gsnap.primary }}
+        style={{ background: gsnap.animatePrimary }}
       />
 
       <div className="lg:space-y-1 w-full">
         <h4
           className="text-lg font-bold uppercase tracking-wider"
-          style={{ color: gsnap.primary }}
+          style={{ color: gsnap.animatePrimary }}
         >
           <span className="flex flex-row font-mono items-center gap-1 justify-baseline select-none">
             {feature.name}
@@ -152,7 +152,7 @@ const SectionContainer = ({
                 <div className="px-2 text-foreground/70 text-center w-full py-4">
                   <div
                     className="w-[2px] mr-2 self-stretch shrink-0"
-                    style={{ background: gsnap.primary }}
+                    style={{ background: gsnap.animatePrimary }}
                   />
                   {section.content}
                 </div>
@@ -193,10 +193,10 @@ export function Overlay() {
     <>
       <div
         style={{
-          color: gsnap.primary,
+          color: gsnap.animatePrimary,
           display: usnap.display ? "none" : "unset",
         }}
-        className="absolute h-dvh w-screen pointer-events-none z-0 transition-colors duration-200"
+        className="absolute h-dvh w-screen pointer-events-none z-0"
       >
         <div
           className={cn(
@@ -220,7 +220,7 @@ export function Overlay() {
           home
           text
           className={cn(
-            "text-xs text-foreground/70 uppercase p-1.5 font-mono pointer-events-auto hover:backdrop-blur-xs hover:bg-primary/20 transition-colors duration-200"
+            "text-xs text-foreground/70 uppercase p-1.5 font-mono pointer-events-auto hover:backdrop-blur-xs hover:bg-primary/20 duration-200"
           )}
         />
       </div>

@@ -84,7 +84,7 @@ const LeftAnimation = createAnimation(
     return gsap
       .timeline()
       .to(refs.leftRef.current.position, { x: 0 })
-      .to(refs.groupRef.current.position, { y: 0 })
+      // .to(refs.groupRef.current.position, { y: 0 })
       .to(refs.leftRef.current.position, { z: 0 }, "<");
   }
 );
@@ -94,11 +94,11 @@ const RightAnimation = createAnimation(
   ({ refs, lg }) => {
     return gsap
       .timeline()
-      .from([refs.rightRef.current.position, refs.groupRef.current.position], {
-        x: 0,
-      })
-      .to(refs.groupRef.current.position, { y: -OFFPAGE_DISTANCE })
-      .to(refs.rightRef.current.position, { z: -OFFPAGE_DISTANCE }, "<")
+      // .from([refs.rightRef.current.position, refs.groupRef.current.position], {
+      //   x: 0,
+      // })
+      // .to(refs.groupRef.current.position, { y: -OFFPAGE_DISTANCE })
+      .to(refs.rightRef.current.position, { z: -OFFPAGE_DISTANCE })
       .to(refs.rightRef.current.position, { x: lg ? -4 : -3 }, ">");
   },
   ({ refs }) => {
