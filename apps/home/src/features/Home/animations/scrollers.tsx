@@ -2,7 +2,23 @@ import { RefObject } from "react";
 import { gsap } from "gsap/gsap-core";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { Observer } from "gsap/Observer";
+gsap.registerPlugin(useGSAP, ScrollTrigger, Observer);
+
+export const disableControllers = (
+  e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
+) => {
+  e?.stopPropagation();
+  ScrollTrigger.getById("container")?.disable(false, false);
+  Observer.getById("ios-observe")?.disable();
+};
+export const enableControllers = (
+  e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
+) => {
+  e?.stopPropagation();
+  ScrollTrigger.getById("container")?.enable(false, false);
+  Observer.getById("ios-observe")?.enable();
+};
 
 // Separate scroll controller implementations
 export const useDesktopScroll = (

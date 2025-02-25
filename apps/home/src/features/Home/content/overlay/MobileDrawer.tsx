@@ -6,6 +6,11 @@ import gsap from "gsap";
 import { Observer } from "gsap/Observer";
 import { useSnapshot } from "valtio";
 import { GuitarState } from "@/store/guitar";
+import {
+  enableControllers,
+  disableControllers,
+} from "../../animations/scrollers";
+
 gsap.registerPlugin(ScrollTrigger, Observer);
 interface DrawerProps {
   children: React.ReactNode;
@@ -85,21 +90,6 @@ export const MobileDrawer = ({
   const height = isExpanded ? maxHeight : minHeight;
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const disableControllers = (
-    e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
-  ) => {
-    e?.stopPropagation();
-    ScrollTrigger.getById("container")?.disable(false, false);
-    Observer.getById("ios-observe")?.disable();
-  };
-  const enableControllers = (
-    e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
-  ) => {
-    e?.stopPropagation();
-    ScrollTrigger.getById("container")?.enable(false, false);
-    Observer.getById("ios-observe")?.enable();
-  };
 
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,

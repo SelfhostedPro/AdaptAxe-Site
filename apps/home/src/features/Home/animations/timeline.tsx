@@ -35,7 +35,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
   const { active, progress } = useProgress();
   // const [currentIndex, setCurrentIndex] = useState<number>(0);
   const animating = useRef(false);
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   useGSAP(
     () => {
@@ -47,7 +47,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       const sections = gsap.utils.toArray(".section") as HTMLDivElement[];
 
       // Use appropriate scroll controller
-      const scrollTween = isIOS
+      const scrollTween = isMobile
         ? useMobileScroll(sections, animating)
         : useDesktopScroll(sections);
 

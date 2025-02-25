@@ -1,4 +1,5 @@
 import { UIState } from "@/store/ui";
+import { disableControllers, enableControllers } from "../../animations/scrollers";
 import { Button } from "@workspace/ui/components/button";
 import { Eye, MoveHorizontal, Settings } from "lucide-react";
 
@@ -9,7 +10,11 @@ export function ControlButtons() {
         size={"icon"}
         variant={"ghost"}
         className="cursor-pointer"
-        onClick={() => (UIState.display = !UIState.display)}
+        onClick={() =>
+          UIState.display
+            ? (enableControllers(), (UIState.display = false))
+            : ((UIState.display = true), disableControllers())
+        }
       >
         <MoveHorizontal strokeWidth={1} />
       </Button>
