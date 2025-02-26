@@ -105,19 +105,19 @@ export function Customizer() {
     <>
       {/* Top control buttons */}
       <ControlButtons />
-      
+
       {/* Visibility controls panel */}
       <div
         ref={visibilityRef}
-        className="fixed top-9 md:top-10 right-8 md:right-10 z-50"
+        className="fixed top-9 md:top-10 right-8 md:right-10 z-50 opacity-0"
       >
         <VisibilityControls />
       </div>
-      
+
       {/* Main customization controls panel */}
       <div
         ref={controlsRef}
-        className="fixed top-9 md:top-10 right-8 md:right-10 z-50"
+        className="fixed top-9 md:top-10 right-8 md:right-10 z-50 opacity-0"
       >
         <Card className="bg-background/40 border-foreground/10 backdrop-blur-3xl rounded-2xl p-4 flex flex-col gap-4">
           <CardContent className="flex flex-row gap-2">
@@ -135,7 +135,7 @@ export function Customizer() {
           </CardContent>
         </Card>
       </div>
-      
+
       {/* Progress indicator at the bottom of the screen */}
       <div className="fixed bottom-0 w-full p-8 transition-all duration-200 delay-300 z-0">
         <ProgressIndicator
