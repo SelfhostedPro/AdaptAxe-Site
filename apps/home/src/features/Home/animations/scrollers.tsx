@@ -106,7 +106,7 @@ export const useMobileScroll = (
         gsap.to(timeline, {
           progress: targetProgress,
           duration: 0.8,
-          ease: "none",
+          ease: "power1.inOut",
           onComplete: () => {
             // Reset animating flag after delay
             gsap.delayedCall(0.5, () => {
