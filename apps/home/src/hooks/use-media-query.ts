@@ -27,10 +27,14 @@ export function useBreakpoints() {
       defaultValue: false,
       initializeWithValue: false,
     }),
-    mobile: useMediaQuery("(max-width: 768px)", {
-      defaultValue: false,
-      initializeWithValue: false,
-    }),
+    mobile:
+      useMediaQuery("(max-width: 768px)", {
+        defaultValue: false,
+        initializeWithValue: false,
+      }) ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ),
     lg: useMediaQuery("(min-width: 1024px)", {
       defaultValue: false,
       initializeWithValue: false,

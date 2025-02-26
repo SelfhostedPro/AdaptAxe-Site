@@ -58,7 +58,7 @@ export function Model({
   const { mobile } = useBreakpoints();
 
   const baseProps = {
-    scale: scale ? scale : 0.04,
+    scale: 0.04,
     castShadow: true,
     recieveShadow: true,
   } as const;
