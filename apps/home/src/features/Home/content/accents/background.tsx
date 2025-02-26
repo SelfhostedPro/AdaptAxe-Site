@@ -85,7 +85,7 @@ export function TextAccents() {
         style={leftAccentStyle}
         className="text-xs font-mono text-foreground/40"
       >
-        2K25///EST
+        2K25 //EST
       </span>
       <span
         style={leftAccentStyle}
@@ -130,7 +130,7 @@ export function TextAccents() {
         style={rightAccentStyle}
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-rl] [text-orientation: sideways]"
       >
-        C-E8_DIST///INCT
+        UN1Q //UE
       </span>
       <span
         style={rightAccentStyle}
