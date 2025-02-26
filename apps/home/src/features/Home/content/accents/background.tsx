@@ -236,7 +236,7 @@ export function TextAccents() {
   useEffect(() => {
     const updateSpeed = (velocity: number) => {
       const baseSpeed = 100; // Base animation duration in seconds
-      const minDuration = 20; // Minimum animation duration
+      const minDuration = 5; // Minimum animation duration
       const targetSpeed = Math.max(
         minDuration,
         baseSpeed - Math.abs(velocity) * 20
@@ -246,7 +246,7 @@ export function TextAccents() {
       currentSpeedRef.current = gsap.utils.interpolate(
         currentSpeedRef.current,
         targetSpeed,
-        0.1 // Interpolation factor
+        0.5 // Interpolation factor
       );
 
       // Update animation duration for both marquees
