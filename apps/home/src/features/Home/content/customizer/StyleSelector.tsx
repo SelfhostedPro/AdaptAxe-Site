@@ -9,6 +9,7 @@ export function StyleSelector() {
 
   return (
     <div className="flex flex-col gap-2">
+      <span className="text-center text-foreground/80">Style</span>
       {gsnap.styles.map((style) => (
         <div
           key={style}

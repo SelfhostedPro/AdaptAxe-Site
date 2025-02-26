@@ -1,11 +1,14 @@
 import { UIState } from "@/store/ui";
-import { disableControllers, enableControllers } from "../../animations/scrollers";
+import {
+  disableControllers,
+  enableControllers,
+} from "../../animations/scrollers";
 import { Button } from "@workspace/ui/components/button";
 import { Eye, MoveHorizontal, Settings } from "lucide-react";
 
 export function ControlButtons() {
   return (
-    <div className="fixed top-0 right-7 z-50 flex flex-row items-center gap-2 p-2 text-foreground">
+    <div className="fixed top-0 right-4 z-50 flex flex-row items-center gap-2 p-2 text-foreground">
       <Button
         size={"icon"}
         variant={"ghost"}
@@ -21,7 +24,10 @@ export function ControlButtons() {
       <Button
         size={"icon"}
         variant={"ghost"}
-        onClick={() => (UIState.visibilityOpen = !UIState.visibilityOpen)}
+        onClick={() => {
+          if (UIState.controlsOpen) UIState.controlsOpen = false;
+          UIState.visibilityOpen = !UIState.visibilityOpen;
+        }}
         className="cursor-pointer"
       >
         <Eye strokeWidth={1} />
@@ -30,7 +36,10 @@ export function ControlButtons() {
         size={"icon"}
         variant={"ghost"}
         className="cursor-pointer"
-        onClick={() => (UIState.controlsOpen = !UIState.controlsOpen)}
+        onClick={() => {
+          if (UIState.visibilityOpen) UIState.visibilityOpen = false;
+          UIState.controlsOpen = !UIState.controlsOpen;
+        }}
       >
         <Settings strokeWidth={1} />
       </Button>

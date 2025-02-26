@@ -25,11 +25,12 @@ import {
 import gsap from "gsap";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { type GuitarRefs } from "@/hooks/useGuitarRefs";
+import { Observer } from "gsap/Observer";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
-  const { lg } = useBreakpoints();
+  const { lg, mobile } = useBreakpoints();
   const timeline = useRef<GSAPTimeline>(null);
   const gsnap = useSnapshot(GuitarState);
   const { active, progress } = useProgress();
@@ -39,10 +40,20 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
-  const { mobile } = useBreakpoints();
+
   useGSAP(
     () => {
       if (!gsnap.ready) return;
+
+      // Clear any existing ScrollTriggers to prevent duplicates
+      ScrollTrigger.getAll().forEach((st) => {
+        console.log(st);
+        if (st.vars.id === "container-scroll") {
+          st.getTween()?.pause(0);
+          st.kill(true);
+        }
+      });
+
       // Set up GSAP animations
       timeline.current = gsap.timeline();
 
@@ -52,7 +63,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       // Use appropriate scroll controller
       const scrollTween = isMobile
         ? useMobileScroll(sections, animating)
-        : useDesktopScroll(sections, mobile ? 200 : 100);
+        : useDesktopScroll(sections, mobile ? 150 : 100);
 
       const contents = gsap.utils.toArray(".content");
       contents.forEach((content, i) => {

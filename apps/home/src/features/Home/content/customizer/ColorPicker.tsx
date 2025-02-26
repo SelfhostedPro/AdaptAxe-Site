@@ -24,7 +24,7 @@ export function ColorPicker({
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
-      <span>{label}</span>
+      <span className="text-foreground/80">{label}</span>
       {colors.map((color) => (
         <div
           key={color}

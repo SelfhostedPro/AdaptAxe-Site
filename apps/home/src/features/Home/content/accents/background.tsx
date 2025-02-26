@@ -37,7 +37,7 @@ const ScrollIndicator = () => {
   return (
     <div
       className={cn(
-        mobile ? "right-10 bottom-2" : "left-12 bottom-2",
+        mobile ? "right-6 bottom-2" : "left-12 bottom-2",
         "fixed animate-bounce z-50 "
       )}
       style={{
@@ -51,7 +51,7 @@ const ScrollIndicator = () => {
           writingMode: "vertical-rl",
           textOrientation: "sideways",
         }}
-        className="transition-all font-mono text-foreground/80 text-xs"
+        className="transition-all font-mono text-foreground/70 text-xs"
       >
         {mobile ? "SWIPE" : "SCROLL"} DOWN {">>>"}
       </div>

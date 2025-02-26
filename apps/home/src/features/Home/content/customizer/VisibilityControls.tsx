@@ -34,7 +34,7 @@ export function VisibilityControls() {
   }, [refs]);
 
   return (
-    <Card className="bg-background">
+    <Card className="bg-background/40 border-foreground/10 backdrop-blur-3xl rounded-2xl p-4 ">
       <CardContent className="p-2 flex flex-col gap-2">
         <span>Visibility</span>
         {bodyRefs.current &&

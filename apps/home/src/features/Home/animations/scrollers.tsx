@@ -31,6 +31,7 @@ export const useDesktopScroll = (
     xPercent: () => -percent * (sections.length - 1),
     ease: "none",
     scrollTrigger: {
+      id: "container-scroll",
       trigger: ".scroll-container",
       pin: true,
       pinSpacing: true,
@@ -67,7 +68,7 @@ export const useMobileScroll = (
     .pause();
 
   ScrollTrigger.observe({
-    id: "ios-observe",
+    id: "container-observe",
     type: "touch,wheel",
     tolerance: 50,
     lockAxis: true,

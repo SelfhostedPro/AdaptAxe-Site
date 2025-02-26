@@ -112,7 +112,7 @@ const SectionContainer = ({
 
   return (
     <div
-      className={`h-dvh w-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen absolute left-${index * 100}`}
+      className={`h-dvh w-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen`}
     >
       {/* Content layer */}
       <div
@@ -188,7 +188,6 @@ export function Overlay() {
   const usnap = useSnapshot(UIState);
   const sections = useSections({ refs });
   const { mobile } = useBreakpoints();
-
   return (
     <>
       <div
@@ -201,8 +200,8 @@ export function Overlay() {
         <div
           className={cn(
             "scroll-container",
-            "flex flex-row relative h-full w-full",
-            mobile ? "gap-[100vw]" : "gap-0"
+            "flex flex-row flex-nowrap relative h-full w-full",
+            mobile ? "gap-[50vw]" : "gap-0"
           )}
         >
           {sections.map((section, index) => (
