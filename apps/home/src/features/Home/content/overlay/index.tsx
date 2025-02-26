@@ -29,7 +29,8 @@ const FeatureItemContainer = ({
       href={feature.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex rounded-none pointer-events-auto w-full pr-2 cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left"
+      className="group relative flex rounded-none pointer-events-auto w-full pr-2 cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left feature_link"
+      data-action={`${feature.name.toLowerCase()}__lnk_click`}
     >
       {children}
     </a>
@@ -38,11 +39,14 @@ const FeatureItemContainer = ({
       className={cn(
         "group relative flex rounded-none pointer-events-auto w-full px-2 md:px-0 md:pr-2",
         (feature.onClick || feature.onPointerEnter || feature.onPointerLeave) &&
-          "cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left"
+          "cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left feature_anim"
       )}
       onClick={() => feature.onClick?.()}
       onPointerEnter={() => feature.onPointerEnter?.()}
       onPointerLeave={() => feature.onPointerLeave?.()}
+      data-action={
+        feature.onClick ? `${feature.name.toLowerCase()}__btn_click` : undefined
+      }
     >
       {children}
     </div>
