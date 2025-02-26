@@ -46,7 +46,7 @@ export function ViewCanvas(props: Omit<CanvasProps, "children">) {
       {...props}
       frameloop="demand"
       shadows
-      dpr={[1, 50]}
+      dpr={[1, 1.5]}
       gl={{ antialias: true }}
     >
       <ScrollControls pages={Parts.length} damping={0.2} horizontal>
