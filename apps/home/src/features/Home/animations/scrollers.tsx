@@ -12,8 +12,8 @@ export const disableControllers = (
   e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
 ) => {
   e?.stopPropagation();
-  ScrollTrigger.getById("container")?.disable(false, false);
-  Observer.getById("ios-observe")?.disable();
+  ScrollTrigger.getById("container-scroll")?.disable(false, false);
+  Observer.getById("container-observe")?.disable();
 };
 
 // Helper function to enable scroll controllers and observers
@@ -21,8 +21,8 @@ export const enableControllers = (
   e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
 ) => {
   e?.stopPropagation();
-  ScrollTrigger.getById("container")?.enable(false, false);
-  Observer.getById("ios-observe")?.enable();
+  ScrollTrigger.getById("container-scroll")?.enable(false, false);
+  Observer.getById("container-observe")?.enable();
 };
 
 // Desktop scroll controller implementation
@@ -105,7 +105,7 @@ export const useMobileScroll = (
         animating.current = true;
         gsap.to(timeline, {
           progress: targetProgress,
-          duration: 0.5,
+          duration: 0.8,
           ease: "none",
           onComplete: () => {
             // Reset animating flag after delay

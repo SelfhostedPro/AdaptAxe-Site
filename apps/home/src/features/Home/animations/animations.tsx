@@ -109,8 +109,9 @@ const RightAnimation = createAnimation(
     return gsap
       .timeline()
       .to(refs.rightRef.current!.position, { x: 0 }, ">")
-      .to(refs.groupRef.current!.position, { y: 0 }, ">")
-      .to(refs.rightRef.current!.position, { z: 0 }, "<");
+      .to(refs.rightRef.current!.position, { z: OFFPAGE_DISTANCE }, "<")
+      .to(refs.leftRef.current.position, { z: OFFPAGE_DISTANCE })
+      .to(refs.groupRef.current!.position, { y: 0 }, ">");
   }
 );
 
@@ -149,6 +150,11 @@ const PickupsAnimation = createAnimation(
       .timeline()
       .to(refs.groupRef.current.position, { y: OFFPAGE_DISTANCE })
       .to(refs.coreRef.current.position, { z: OFFPAGE_DISTANCE }, "<")
+      .set(
+        [refs.leftRef.current.position, refs.rightRef.current.position],
+        { z: -OFFPAGE_DISTANCE * 2 },
+        "<"
+      )
       .to(refs.pickupRef.current.position, { z: OFFPAGE_DISTANCE }, "<")
       .to(refs.bridgeRef.current.position, { z: OFFPAGE_DISTANCE * 2 }, "<");
   },

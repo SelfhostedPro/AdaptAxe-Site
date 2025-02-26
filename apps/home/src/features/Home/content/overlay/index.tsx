@@ -9,11 +9,13 @@ import { ExploreAnimations } from "../../animations/timeline";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Socials } from "@/components/Links";
 import { TitleAccent } from "../accents/foreground";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Feature } from "../sections";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { MobileDrawer } from "./MobileDrawer";
-
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+gsap.registerPlugin(useGSAP);
 const FeatureItemContainer = ({
   children,
   feature,
@@ -188,6 +190,15 @@ export function Overlay() {
   const usnap = useSnapshot(UIState);
   const sections = useSections({ refs });
   const { mobile } = useBreakpoints();
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      overlayRef.current,
+      { opacity: 0, filter: "blur(10px)" },
+      { opacity: 1, filter: "blur(0px)" }
+    );
+  }, [overlayRef.current]);
   return (
     <>
       <div
@@ -198,11 +209,13 @@ export function Overlay() {
         className="absolute h-dvh w-screen pointer-events-none z-0"
       >
         <div
+          ref={overlayRef}
           className={cn(
             "scroll-container",
             "flex flex-row flex-nowrap relative h-full w-full",
             mobile ? "gap-[50vw]" : "gap-0"
           )}
+          style={{ opacity: 0 }}
         >
           {sections.map((section, index) => (
             <SectionContainer

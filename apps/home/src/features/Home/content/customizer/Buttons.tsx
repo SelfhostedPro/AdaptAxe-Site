@@ -20,8 +20,8 @@ export function ControlButtons() {
         className="cursor-pointer"
         onClick={() =>
           UIState.display
-            ? (enableControllers(), (UIState.display = false))
-            : ((UIState.display = true), disableControllers())
+            ? (disableControllers(), (UIState.display = false))
+            : ((UIState.display = true), enableControllers())
         }
       >
         <MoveHorizontal strokeWidth={1} />
