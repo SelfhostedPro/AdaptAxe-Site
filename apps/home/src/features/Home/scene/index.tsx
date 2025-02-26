@@ -1,22 +1,15 @@
 "use client";
 import { Float } from "@react-three/drei";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Controls } from "./Controls";
-import { useFrame, type ThreeElements } from "@react-three/fiber";
+import { type ThreeElements } from "@react-three/fiber";
 import { useSnapshot } from "valtio";
 import { GuitarState } from "@/store/guitar";
 import * as THREE from "three";
-import { easing } from "maath";
 import dynamic from "next/dynamic";
 import { SectionState } from "../store";
 import { useBreakpoints } from "@/hooks/use-media-query";
-import {
-  EffectComposer,
-  Bloom,
-  DepthOfField,
-} from "@react-three/postprocessing";
-import { DepthOfFieldEffect, BloomEffect } from "postprocessing";
 import { OFFPAGE_DISTANCE } from "@/constants";
 import gsap from "gsap";
 
@@ -51,7 +44,7 @@ export function ExploreScene() {
           parentRef.current!.visible = true; // Make visible after positioning
         },
       });
-      
+
       // Animate the guitar model into view
       gsap.fromTo(
         parentRef.current.position as [number, number, number],
@@ -118,7 +111,7 @@ export function ExploreScene() {
                 />
               }
             />
-            
+
             {/* Highlight sphere used for feature demonstrations */}
             <mesh ref={refs.highlightRef} position={[0, 0, 0]}>
               <sphereGeometry scale={1} />
