@@ -81,25 +81,29 @@ const LeftAnimation = createAnimation(
       .to(refs.leftRef.current.position, { x: 1.5 }, ">");
   },
   ({ refs }) => {
-    return gsap
-      .timeline()
-      .to(refs.leftRef.current.position, { x: 0 })
-      // .to(refs.groupRef.current.position, { y: 0 })
-      .to(refs.leftRef.current.position, { z: 0 }, "<");
+    return (
+      gsap
+        .timeline()
+        .to(refs.leftRef.current.position, { x: 0 })
+        // .to(refs.groupRef.current.position, { y: 0 })
+        .to(refs.leftRef.current.position, { z: 0 }, "<")
+    );
   }
 );
 
 const RightAnimation = createAnimation(
   "right",
   ({ refs, lg }) => {
-    return gsap
-      .timeline()
-      // .from([refs.rightRef.current.position, refs.groupRef.current.position], {
-      //   x: 0,
-      // })
-      // .to(refs.groupRef.current.position, { y: -OFFPAGE_DISTANCE })
-      .to(refs.rightRef.current.position, { z: -OFFPAGE_DISTANCE })
-      .to(refs.rightRef.current.position, { x: lg ? -4 : -3 }, ">");
+    return (
+      gsap
+        .timeline()
+        // .from([refs.rightRef.current.position, refs.groupRef.current.position], {
+        //   x: 0,
+        // })
+        // .to(refs.groupRef.current.position, { y: -OFFPAGE_DISTANCE })
+        .to(refs.rightRef.current.position, { z: -OFFPAGE_DISTANCE })
+        .to(refs.rightRef.current.position, { x: lg ? -4 : -3 }, ">")
+    );
   },
   ({ refs }) => {
     return gsap
@@ -165,11 +169,9 @@ const CoreAnimation = createAnimation(
       .to(refs.pickupRef.current.position, { x: -4 }, "<");
   },
   ({ refs, lg }) => {
-    return gsap
-      .timeline()
-      .to(refs.coreRef.current.position, {
-        z: OFFPAGE_DISTANCE,
-      });
+    return gsap.timeline().to(refs.coreRef.current.position, {
+      z: OFFPAGE_DISTANCE,
+    });
     // .to(refs.pickupRef.current.position, { z: OFFPAGE_DISTANCE })
     // .to(refs.pickupRef.current.position, { x: 0 }, ">");
     // .to(
@@ -212,7 +214,8 @@ const BridgeAnimation = createAnimation(
           refs.pickupRef.current.position,
           refs.neckRef.current.position,
         ],
-        { z: 0, x: 0, y: 0 }, '<'
+        { z: 0, x: 0, y: 0 },
+        "<"
       );
   },
   ({ refs }) => {

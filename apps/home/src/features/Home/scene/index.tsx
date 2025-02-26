@@ -20,12 +20,18 @@ import { DepthOfFieldEffect, BloomEffect } from "postprocessing";
 import { OFFPAGE_DISTANCE } from "@/constants";
 import gsap from "gsap";
 
+// Dynamically import the Guitar model to prevent SSR issues
 // Needed to prevent ProgressEvent Error
 const Guitar = dynamic(
   () => import("@/components/models/Guitar").then((mod) => mod.Model),
   { ssr: false }
 );
 
+/**
+ * ExploreScene is the main 3D scene component for the guitar explorer.
+ * It handles the rendering of the guitar model, materials, animations,
+ * and positioning based on the current state.
+ */
 export function ExploreScene() {
   const snap = useSnapshot(GuitarState);
   const ssnap = useSnapshot(SectionState);
@@ -35,15 +41,18 @@ export function ExploreScene() {
   const { refs } = useGuitar();
   const { mobile } = useBreakpoints();
 
+  // Handle initial animation when the model is ready
   useEffect(() => {
     if (snap.ready && parentRef.current) {
       // Start slide-in animation when model is ready
       gsap.set(parentRef.current.position as [number, number, number], {
-        x: mobile ? -OFFPAGE_DISTANCE : OFFPAGE_DISTANCE,
+        x: mobile ? -OFFPAGE_DISTANCE : OFFPAGE_DISTANCE, // Start position depends on device type
         onComplete: () => {
-          parentRef.current!.visible = true;
+          parentRef.current!.visible = true; // Make visible after positioning
         },
       });
+      
+      // Animate the guitar model into view
       gsap.fromTo(
         parentRef.current.position as [number, number, number],
         { x: mobile ? -OFFPAGE_DISTANCE : OFFPAGE_DISTANCE },
@@ -56,6 +65,7 @@ export function ExploreScene() {
     }
   }, [snap.ready, parentRef.current]);
 
+  // Material properties for the secondary/back parts of the guitar
   const backMaterialProps: ThreeElements["meshPhongMaterial"] = {
     toneMapped: false,
     shininess: 100,
@@ -64,6 +74,7 @@ export function ExploreScene() {
     emissiveIntensity: 0.4,
   };
 
+  // Material properties for the primary/front parts of the guitar
   const primaryMaterialProps: ThreeElements["meshPhysicalMaterial"] = {
     toneMapped: false,
     roughness: 0.5,
@@ -72,6 +83,7 @@ export function ExploreScene() {
     envMapIntensity: 1,
   };
 
+  // Color animation is commented out but kept for reference
   // useFrame((_, delta) => {
   //   // @ts-expect-error Ref is usable here
   //   easing.dampC(primaryColor, snap.primary, 0.25, delta);
@@ -79,14 +91,16 @@ export function ExploreScene() {
   //   easing.dampC(secondaryColor, snap.secondary, 0.25, delta);
   // });
 
-  // Scale Factor
+  // Calculate responsive scale factor based on screen width
   const sf = Math.min(Math.max(window.innerWidth / 1260, 0.6), 1);
 
   return (
     <>
       <Controls>
+        {/* Float animation only enabled on the "thanks" section */}
         <Float enabled={ssnap.section === "thanks"}>
           <group ref={parentRef} visible={false} scale={1 * sf}>
+            {/* Guitar model with dynamic materials based on selected colors */}
             <Guitar
               active={ssnap.section}
               primaryMaterial={
@@ -104,6 +118,8 @@ export function ExploreScene() {
                 />
               }
             />
+            
+            {/* Highlight sphere used for feature demonstrations */}
             <mesh ref={refs.highlightRef} position={[0, 0, 0]}>
               <sphereGeometry scale={1} />
               <meshBasicMaterial

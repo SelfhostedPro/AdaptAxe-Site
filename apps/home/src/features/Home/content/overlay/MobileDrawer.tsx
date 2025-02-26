@@ -12,19 +12,28 @@ import {
 } from "../../animations/scrollers";
 
 gsap.registerPlugin(ScrollTrigger, Observer);
+
+/**
+ * Props for the MobileDrawer component
+ */
 interface DrawerProps {
   children: React.ReactNode;
-  minHeight: string;
-  maxHeight: string;
-  isExpanded: boolean;
-  setIsExpanded: (expanded: boolean) => void;
-  isAnimating?: boolean;
-  setIsAnimating?: (animating: boolean) => void;
+  minHeight: string;  // Height when drawer is collapsed
+  maxHeight: string;  // Height when drawer is expanded
+  isExpanded: boolean;  // Current expansion state
+  setIsExpanded: (expanded: boolean) => void;  // Function to update expansion state
+  isAnimating?: boolean;  // Whether the drawer is currently animating
+  setIsAnimating?: (animating: boolean) => void;  // Function to update animation state
 }
 
+/**
+ * DrawerHandle component renders the handle at the top of the drawer
+ * that users can interact with to expand or collapse the drawer
+ */
 export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
     <div className="w-full py-4 text-center z-50">
+      {/* Top handle with arrows and text */}
       <div className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5">
         <span
           className={cn(
@@ -47,6 +56,8 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
         </span>
       </div>
       {/* <div className="w-12 h-1 rounded-full bg-foreground/40 mx-auto" /> */}
+      
+      {/* Vertical "FEATURES" text on the left side */}
       <span
         style={{
           writingMode: "vertical-rl",
@@ -78,6 +89,11 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
   );
 };
 
+/**
+ * MobileDrawer component creates a draggable drawer that can be expanded or collapsed
+ * to show additional content on mobile devices. It includes gesture handling for
+ * drag interactions and prevents scroll conflicts with the main page.
+ */
 export const MobileDrawer = ({
   children,
   minHeight,
@@ -91,8 +107,8 @@ export const MobileDrawer = ({
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Add a subtle pulse animation when the page loads to draw attention to the drawer
   useEffect(() => {
-    // Subtle pulse animation when the page loads to draw attention
     if (containerRef.current) {
       gsap.to(containerRef.current, {
         y: -10,
@@ -105,12 +121,17 @@ export const MobileDrawer = ({
     }
   }, []);
 
+  // Provide haptic feedback when interacting with the drawer (if supported)
   const triggerHapticFeedback = () => {
     if (navigator.vibrate) {
       navigator.vibrate(20);
     }
   };
 
+  /**
+   * Handle the end of a drag gesture to determine whether to expand or collapse
+   * the drawer based on the drag distance
+   */
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -153,9 +174,11 @@ export const MobileDrawer = ({
         dragMomentum={false}
         onDragEnd={handleDragEnd}
         onDragStart={(e) => {
+          // Disable page scrolling while dragging
           disableControllers(e);
         }}
         onTap={() => {
+          // Toggle drawer state on tap and provide haptic feedback
           triggerHapticFeedback();
           setIsExpanded(!isExpanded);
         }}
@@ -167,7 +190,10 @@ export const MobileDrawer = ({
           enableControllers();
         }}
       >
+        {/* Drawer handle for user interaction */}
         <DrawerHandle isExpanded={isExpanded} />
+        
+        {/* Content container with scroll handling */}
         <div
           className="mx-4 flex-1 pb-4 inline-block cursor-auto overflow-y-auto rounded-t-lg bg-background"
           style={{

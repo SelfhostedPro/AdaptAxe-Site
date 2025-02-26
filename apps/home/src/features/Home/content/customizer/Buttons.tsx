@@ -6,9 +6,14 @@ import {
 import { Button } from "@workspace/ui/components/button";
 import { Eye, MoveHorizontal, Settings } from "lucide-react";
 
+/**
+ * ControlButtons component renders a set of control buttons for the guitar customizer.
+ * These buttons allow users to toggle different UI states and control panels.
+ */
 export function ControlButtons() {
   return (
     <div className="fixed top-0 right-4 z-50 flex flex-row items-center gap-2 p-2 text-foreground">
+      {/* Toggle movement controls button */}
       <Button
         size={"icon"}
         variant={"ghost"}
@@ -21,6 +26,8 @@ export function ControlButtons() {
       >
         <MoveHorizontal strokeWidth={1} />
       </Button>
+      
+      {/* Toggle visibility panel button */}
       <Button
         size={"icon"}
         variant={"ghost"}
@@ -32,6 +39,8 @@ export function ControlButtons() {
       >
         <Eye strokeWidth={1} />
       </Button>
+      
+      {/* Toggle settings/controls panel button */}
       <Button
         size={"icon"}
         variant={"ghost"}

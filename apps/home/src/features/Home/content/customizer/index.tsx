@@ -16,6 +16,12 @@ import { Parts } from "@/constants";
 import { SectionState } from "../../store";
 
 type BodyRefs = Record<string, RefObject<THREE.Group | THREE.Mesh | null>>;
+
+/**
+ * Customizer component is the main container for all guitar customization controls.
+ * It manages the visibility and animation of control panels and provides access to
+ * color pickers, style selectors, and visibility controls.
+ */
 export function Customizer() {
   const gsnap = useSnapshot(GuitarState);
   const usnap = useSnapshot(UIState);
@@ -26,6 +32,7 @@ export function Customizer() {
   const visibilityRef = useRef<HTMLDivElement>(null);
   const bodyRefs = useRef<BodyRefs>(null);
 
+  // Initialize references to guitar parts
   useEffect(() => {
     bodyRefs.current = {
       Core: refs.coreRef,
@@ -38,11 +45,13 @@ export function Customizer() {
     };
   }, [refs]);
 
+  // Handle animations for control panels
   useGSAP(() => {
     // Define animation states
     const offscreenState = { x: 300, opacity: 0, duration: 0.2 };
     const onscreenState = { x: 0, opacity: 1, duration: 0.2 };
 
+    // Helper function to animate a panel on or off screen
     const open = (ref: RefObject<HTMLDivElement | null>, state: boolean) => {
       if (!ref.current) return;
       if (state) {
@@ -94,19 +103,25 @@ export function Customizer() {
 
   return (
     <>
+      {/* Top control buttons */}
       <ControlButtons />
+      
+      {/* Visibility controls panel */}
       <div
         ref={visibilityRef}
         className="fixed top-9 md:top-10 right-8 md:right-10 z-50"
       >
         <VisibilityControls />
       </div>
+      
+      {/* Main customization controls panel */}
       <div
         ref={controlsRef}
         className="fixed top-9 md:top-10 right-8 md:right-10 z-50"
       >
         <Card className="bg-background/40 border-foreground/10 backdrop-blur-3xl rounded-2xl p-4 flex flex-col gap-4">
           <CardContent className="flex flex-row gap-2">
+            {/* Color pickers for primary and secondary colors */}
             <ColorPicker colors={gsnap.primarys} label="P" stateKey="primary" />
             <ColorPicker
               colors={gsnap.secondarys}
@@ -115,10 +130,13 @@ export function Customizer() {
             />
           </CardContent>
           <CardContent>
+            {/* Style selector for different guitar styles */}
             <StyleSelector />
           </CardContent>
         </Card>
       </div>
+      
+      {/* Progress indicator at the bottom of the screen */}
       <div className="fixed bottom-0 w-full p-8 transition-all duration-200 delay-300 z-0">
         <ProgressIndicator
           currentSection={Parts.indexOf(ssnap.section)}

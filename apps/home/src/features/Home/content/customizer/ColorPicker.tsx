@@ -3,6 +3,13 @@ import gsap from "gsap";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 
+/**
+ * ColorPicker component allows users to select colors for the guitar.
+ * 
+ * @param colors - Array of color options to display
+ * @param label - Label for the color picker (P for Primary, S for Secondary)
+ * @param stateKey - Which color property to update in the GuitarState ("primary" or "secondary")
+ */
 export function ColorPicker({
   colors,
   label,
@@ -14,6 +21,7 @@ export function ColorPicker({
 }) {
   const gsnap = useSnapshot(GuitarState);
 
+  // Animate color transitions when primary or secondary colors change
   useEffect(() => {
     gsap.to(GuitarState, {
       animatePrimary: gsnap.primary,
@@ -25,6 +33,7 @@ export function ColorPicker({
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
       <span className="text-foreground/80">{label}</span>
+      {/* Render color swatches for each available color */}
       {colors.map((color) => (
         <div
           key={color}

@@ -44,6 +44,7 @@ export function ViewCanvas(props: Omit<CanvasProps, "children">) {
         touchAction: "none",
       }}
       {...props}
+      frameloop="demand"
       shadows
       dpr={[1, 50]}
       gl={{ antialias: true }}

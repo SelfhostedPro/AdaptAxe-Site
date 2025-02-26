@@ -8,22 +8,26 @@ import { useBreakpoints } from "@/hooks/use-media-query";
 import { cn } from "@workspace/ui/lib/utils";
 gsap.registerPlugin(ScrollTrigger);
 
+// Component that shows a scroll/swipe indicator that fades after user activity
 const ScrollIndicator = () => {
   const [isVisible, setIsVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
   const { mobile } = useBreakpoints();
 
   useEffect(() => {
+    // Hide indicator on user activity and show again after delay
     const handleActivity = () => {
       setIsVisible(false);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => setIsVisible(true), 3000);
     };
 
+    // Listen for various user interaction events
     const events = ["mousemove", "scroll", "keydown", "touchstart"];
     events.forEach((event) => window.addEventListener(event, handleActivity));
     handleActivity(); // Initial setup
 
+    // Cleanup event listeners
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       events.forEach((event) =>
@@ -62,8 +66,9 @@ export function TextAccents() {
   const snap = useSnapshot(GuitarState);
   const leftMarqueeRef = useRef<HTMLDivElement>(null);
   const rightMarqueeRef = useRef<HTMLDivElement>(null);
-  const currentSpeedRef = useRef(40); // Track current speed
+  const currentSpeedRef = useRef(40); // Track current speed for marquee animation
 
+  // Common styles for vertical text orientation
   const leftAccentStyle = {
     writingMode: "vertical-lr",
     textOrientation: "sideways",
@@ -73,6 +78,7 @@ export function TextAccents() {
     textOrientation: "sideways",
   } as CSSProperties;
 
+  // Component for left side decorative text
   const LeftAccents = () => (
     <div className="flex flex-col gap-8">
       <span
@@ -116,6 +122,8 @@ export function TextAccents() {
       </span>
     </div>
   );
+
+  // Component for right side decorative text
   const RightAccents = () => (
     <div className="flex flex-col gap-8">
       <span
@@ -159,6 +167,8 @@ export function TextAccents() {
       </span>
     </div>
   );
+
+  // Component for additional left side accents with divider lines
   const LeftSubAccents = () => (
     <>
       <div className="flex-1 w-[1px] bg-foreground/40" />
@@ -178,6 +188,7 @@ export function TextAccents() {
     </>
   );
 
+  // Component for grid background (currently commented out)
   const Grid = () => (
     <>
       {/* <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
@@ -221,7 +232,7 @@ export function TextAccents() {
     </>
   );
 
-  // Set up scroll velocity effect
+  // Effect to handle scroll velocity-based marquee speed
   useEffect(() => {
     const updateSpeed = (velocity: number) => {
       const baseSpeed = 100; // Base animation duration in seconds
@@ -231,13 +242,14 @@ export function TextAccents() {
         baseSpeed - Math.abs(velocity) * 20
       );
 
-      // Smooth interpolation
+      // Smooth interpolation between current and target speed
       currentSpeedRef.current = gsap.utils.interpolate(
         currentSpeedRef.current,
         targetSpeed,
-        0.1 // Adjust this value to control deceleration speed (0-1)
+        0.1 // Interpolation factor
       );
 
+      // Update animation duration for both marquees
       if (leftMarqueeRef.current) {
         leftMarqueeRef.current.style.animationDuration = `${Math.abs(currentSpeedRef.current)}s`;
       }
@@ -246,7 +258,7 @@ export function TextAccents() {
       }
     };
 
-    // Subscribe to scroll velocity
+    // Set up scroll velocity observer
     const trigger = ScrollTrigger.observe({
       type: "wheel,touch,scroll",
       onChange: (self) => {
@@ -258,12 +270,13 @@ export function TextAccents() {
 
     return () => trigger.kill();
   }, []);
+
   return (
     <>
-      {/* Grid overlay */}
+      {/* Background grid */}
       <Grid />
 
-      {/* Dynamic color strip accents */}
+      {/* Corner accent strips */}
       <div
         className="absolute top-0 left-0 w-1 h-32 z-20"
         style={{ background: snap.animatePrimary }}
@@ -281,11 +294,7 @@ export function TextAccents() {
         style={{ background: snap.animatePrimary }}
       />
 
-      {/* Colored Text Accents */}
-
-      {/* White Text Accents */}
-
-      {/* Left Sub Accents */}
+      {/* Left side sub-accents with slide animation */}
       <div
         style={{
           animation: "slide-from-left 0.3s ease-out forwards",
@@ -298,7 +307,7 @@ export function TextAccents() {
         <LeftSubAccents />
       </div>
 
-      {/* Left Marquee */}
+      {/* Left side marquee */}
       <div
         style={{
           animation: "wipe-from-center 0.3s linear forwards",
@@ -317,8 +326,7 @@ export function TextAccents() {
         </div>
       </div>
 
-      {/* RIGHT */}
-      {/* Right Marquee */}
+      {/* Right side marquee */}
       <div
         style={{
           animation: "wipe-from-center 0.3s linear forwards",
@@ -336,6 +344,8 @@ export function TextAccents() {
           ))}
         </div>
       </div>
+
+      {/* Scroll/swipe indicator */}
       <ScrollIndicator />
     </>
   );

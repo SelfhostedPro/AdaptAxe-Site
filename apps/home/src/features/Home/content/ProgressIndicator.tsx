@@ -3,6 +3,13 @@ import { useBreakpoints } from "@/hooks/use-media-query";
 import { cn } from "@workspace/ui/lib/utils";
 import { useState } from "react";
 
+/**
+ * ProgressIndicator component displays the current section number and a progress bar
+ * showing how far the user has navigated through the content.
+ * 
+ * @param currentSection - Zero-based index of the current section
+ * @param totalSections - Total number of sections available
+ */
 export function ProgressIndicator({
   currentSection,
   totalSections,
@@ -10,12 +17,14 @@ export function ProgressIndicator({
   currentSection: number;
   totalSections: number;
 }) {
+  // State to track whether the progress bar is expanded (mobile only)
   const [isExpanded, setIsExpanded] = useState(false);
   const { mobile } = useBreakpoints();
 
   return (
     <div
       onClick={() => {
+        // Toggle expanded state and auto-collapse after delay on mobile
         setIsExpanded(!isExpanded);
         if (!isExpanded) {
           // Only set timeout when expanding
@@ -27,6 +36,7 @@ export function ProgressIndicator({
         "cursor-pointer fixed  z-30 flex items-center space-x-4 bg-background/60 backdrop-blur-md rounded-full px-2 py-1"
       )}
     >
+      {/* Section counter display (e.g., "01 / 08") */}
       <div className="text-md font-mono">
         <span className="text-foreground">
           {(currentSection + 1).toString().padStart(2, "0")}
@@ -36,6 +46,8 @@ export function ProgressIndicator({
           / {totalSections.toString().padStart(2, "0")}
         </span>
       </div>
+      
+      {/* Progress bar - conditionally shown on mobile, always visible on desktop */}
       {mobile ? (
         <div
           className={cn(

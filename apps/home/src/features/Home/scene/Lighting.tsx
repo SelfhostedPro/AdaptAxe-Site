@@ -2,11 +2,18 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+/**
+ * Lighting component sets up a professional three-point lighting system
+ * for the 3D scene, creating depth and dimension for the guitar model.
+ */
 export function Lighting() {
   const groupRef = useRef<THREE.Group>(null);
 
+  // Ensure all directional lights are pointing at the center of the scene
   useEffect(() => {
     if (!groupRef.current) return;
+    
+    // Find all directional lights in the group and make them look at the center
     groupRef.current.children
       .filter(
         (child) =>

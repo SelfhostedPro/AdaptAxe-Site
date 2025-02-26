@@ -2,7 +2,6 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import { useDesktopScroll, useMobileScroll } from "./scrollers";
-// GSAP
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useSnapshot } from "valtio";
@@ -25,17 +24,19 @@ import {
 import gsap from "gsap";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { type GuitarRefs } from "@/hooks/useGuitarRefs";
-import { Observer } from "gsap/Observer";
 
+// Register GSAP plugins
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
+  // Get breakpoint info and mobile detection
   const { lg, mobile } = useBreakpoints();
   const timeline = useRef<GSAPTimeline>(null);
   const gsnap = useSnapshot(GuitarState);
   const { active, progress } = useProgress();
-  // const [currentIndex, setCurrentIndex] = useState<number>(0);
   const animating = useRef(false);
+  
+  // Check if user is on mobile device
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -43,48 +44,45 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
 
   useGSAP(
     () => {
+      // Don't run animations until guitar model is ready
       if (!gsnap.ready) return;
 
-      // Clear any existing ScrollTriggers to prevent duplicates
+      // Clear any existing ScrollTriggers to prevent duplicates that push div out of viewport
       ScrollTrigger.getAll().forEach((st) => {
-        console.log(st);
         if (st.vars.id === "container-scroll") {
           st.getTween()?.pause(0);
           st.kill(true);
         }
       });
 
-      // Set up GSAP animations
+      // Set up GSAP animations timeline
       timeline.current = gsap.timeline();
 
-      // Setup Scroll Animations
+      // Get all section elements
       const sections = gsap.utils.toArray(".section") as HTMLDivElement[];
 
-      // Use appropriate scroll controller
+      // Use appropriate scroll controller based on device type
       const scrollTween = isMobile
         ? useMobileScroll(sections, animating)
         : useDesktopScroll(sections, mobile ? 150 : 100);
 
+      // Set up content reveal animations
       const contents = gsap.utils.toArray(".content");
       contents.forEach((content, i) => {
         if (i === 0) return; // Skip first section
         gsap.fromTo(
           content as gsap.TweenTarget,
           {
-            // clipPath: "inset(0 100% 0 0)",
             filter: "blur(2px)",
             opacity: 0,
           },
           {
-            // clipPath: "inset(0 0% 0 0)",
             filter: "blur(0px)",
             opacity: 1,
             duration: 0.5,
             ease: "none",
             scrollTrigger: {
               invalidateOnRefresh: true,
-              // markers: { indent: i * 30 },
-              // pin: sections[i] as HTMLDivElement,
               pin: true,
               pinSpacing: true,
               pinnedContainer: ".scroll-container",
@@ -99,6 +97,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
         );
       });
 
+      // Add guitar part animations in sequence
       timeline.current
         .add(LeftEnter({ refs, lg, scrollTween: scrollTween }))
         .add(LeftExit({ refs, lg, scrollTween: scrollTween }));
@@ -119,7 +118,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
         .add(BridgeExit({ refs, lg, scrollTween: scrollTween }));
       timeline.current.add(ThanksEnter({ refs, lg, scrollTween: scrollTween }));
 
-      // Fix IOS Scrolling
+      // Fix IOS Scrolling issues
       ScrollTrigger.config({ ignoreMobileResize: true });
       ScrollTrigger.normalizeScroll(true);
     },
