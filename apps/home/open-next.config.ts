@@ -1,6 +1,4 @@
 import incrementalCache from "@opennextjs/cloudflare/kv-cache";
-
-import memoryQueue from "@opennextjs/cloudflare/memory-queue";
 import type { OpenNextConfig } from "@opennextjs/aws/types/open-next.js";
 
 const config: OpenNextConfig = {
@@ -10,7 +8,7 @@ const config: OpenNextConfig = {
       converter: "edge",
       incrementalCache: async () => incrementalCache,
       tagCache: "dummy",
-      queue: "dummy",
+      queue: "dummy"
     },
   },
   middleware: {
@@ -19,10 +17,11 @@ const config: OpenNextConfig = {
       wrapper: "cloudflare-edge",
       converter: "edge",
       proxyExternalRequest: "fetch",
+      generateDockerfile: true
     },
   },
   dangerous: {
-    enableCacheInterception: false,
+    enableCacheInterception: true,
   },
 };
 

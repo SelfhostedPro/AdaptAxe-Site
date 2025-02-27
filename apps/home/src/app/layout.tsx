@@ -3,18 +3,24 @@ import "@workspace/ui/globals.css";
 import { ThemeProvider } from "@workspace/ui/components/providers/theme";
 
 // Meta
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/constants";
 import { JetBrains_Mono, Chivo } from "next/font/google";
 
 // Analytics
 import { PostHogProvider } from "@/components/providers/Posthog";
 
+export const viewport: Viewport = {
+  themeColor: "#171717",
+  colorScheme: "dark light",
+};
+
 export const metadata: Metadata = {
   title: {
     default: SITE_NAME,
     template: `%s - ${SITE_NAME}`,
   },
+  applicationName: SITE_NAME,
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
   keywords: [
@@ -53,6 +59,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+    
+  }
 };
 
 const fontSans = Chivo({
@@ -75,7 +86,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-      {/* <script src="https://greggman.github.io/webgl-lint/webgl-lint.js" crossOrigin={""}></script> */}
+        {/* <script src="https://greggman.github.io/webgl-lint/webgl-lint.js" crossOrigin={""}></script> */}
       </head>
       <body
         className={`${fontSans.variable}  ${fontMono.variable} font-sans antialiased`}

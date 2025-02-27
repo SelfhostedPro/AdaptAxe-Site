@@ -10,6 +10,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "minify": true,
   "routes": [{ "pattern": "adaptaxe.com", "custom_domain": true }],
+  "upload_source_maps": true,
   "assets": {
     "binding": "ASSETS",
     "directory": ".open-next/assets",
