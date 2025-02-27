@@ -20,13 +20,13 @@ export function ControlButtons() {
         className="cursor-pointer"
         onClick={() =>
           UIState.display
-            ? (disableControllers(), (UIState.display = false))
-            : ((UIState.display = true), enableControllers())
+            ? (enableControllers(), (UIState.display = false))
+            : ((UIState.display = true), disableControllers())
         }
       >
         <MoveHorizontal strokeWidth={1} />
       </Button>
-      
+
       {/* Toggle visibility panel button */}
       <Button
         size={"icon"}
@@ -39,7 +39,7 @@ export function ControlButtons() {
       >
         <Eye strokeWidth={1} />
       </Button>
-      
+
       {/* Toggle settings/controls panel button */}
       <Button
         size={"icon"}

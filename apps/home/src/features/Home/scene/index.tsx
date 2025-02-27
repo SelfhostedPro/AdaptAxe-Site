@@ -12,6 +12,7 @@ import { SectionState } from "../store";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { OFFPAGE_DISTANCE } from "@/constants";
 import gsap from "gsap";
+import { Perf } from "r3f-perf";
 
 // Dynamically import the Guitar model to prevent SSR issues
 // Needed to prevent ProgressEvent Error

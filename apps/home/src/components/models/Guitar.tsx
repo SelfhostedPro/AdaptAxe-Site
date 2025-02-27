@@ -52,7 +52,9 @@ export function Model({
   const snap = useSnapshot(GuitarState);
   const { progress } = useProgress();
   const { nodes, materials } = useGLTF(
-    "https://assets.adaptaxe.com/guitar-transformed.glb"
+    "https://assets.adaptaxe.com/main.glb",
+    true,
+    true
   ) as GLTFResult;
   const three = useThree();
   const { mobile } = useBreakpoints();
@@ -60,7 +62,7 @@ export function Model({
   const baseProps = {
     scale: 0.04,
     castShadow: true,
-    recieveShadow: true,
+    receiveShadow: true,
   } as const;
 
   const geometryMap: Record<
@@ -87,12 +89,14 @@ export function Model({
     if (progress === 100 && refs.groupRef.current) {
       GuitarState.ready = true;
     }
-  }, [progress, refs.groupRef.current]);
+  }, [progress, refs.groupRef]);
 
   useEffect(() => {
-    refs.groupRef.current!.lookAt(three.camera.position);
-    refs.groupRef.current!.rotateX(Math.PI / 2);
-  }, [three.camera.position]);
+    if (refs.groupRef.current) {
+      refs.groupRef.current.lookAt(three.camera.position);
+      refs.groupRef.current.rotateX(Math.PI / 2);
+    }
+  }, [three.camera.position, refs.groupRef]);
 
   return (
     <group rotation={[Math.PI / 2, 0, 0]} ref={refs.groupRef} dispose={null}>
@@ -198,4 +202,7 @@ export function Model({
   );
 }
 
-useGLTF.preload("https://assets.adaptaxe.com/guitar-transformed.glb");
+useGLTF.preload(
+  // "https://assets.adaptaxe.com/guitar-transformed.glb",
+  "https://assets.adaptaxe.com/main.glb"
+);

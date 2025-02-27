@@ -116,7 +116,10 @@ export function TextAccents() {
         className="text-xs font-mono text-foreground/40 [writing-mode:sideways-lr] [text-orientation: sideways]"
       >
         MODE:
-        <span style={{ color: snap.animatePrimary, opacity: 40 }} className="uppercase">
+        <span
+          style={{ color: snap.animatePrimary, opacity: 40 }}
+          className="uppercase"
+        >
           {snap.style}
         </span>
       </span>
@@ -235,37 +238,52 @@ export function TextAccents() {
   // Effect to handle scroll velocity-based marquee speed
   useEffect(() => {
     const updateSpeed = (velocity: number) => {
-      const baseSpeed = 100; // Base animation duration in seconds
-      const minDuration = 5; // Minimum animation duration
-      const targetSpeed = Math.max(
-        minDuration,
-        baseSpeed - Math.abs(velocity) * 20
-      );
-
-      // Smooth interpolation between current and target speed
+      // Use a different approach to calculate speed
+      // Map velocity to a speed multiplier instead of directly to duration
+      const minSpeed = 0.5;  // Minimum speed multiplier (slower)
+      const maxSpeed = 8;    // Maximum speed multiplier (faster)
+      const baseSpeed = 40;  // Base animation duration
+      
+      // Calculate speed multiplier based on velocity
+      // Higher velocity = higher multiplier = faster animation
+      const speedMultiplier = minSpeed + (velocity * 50);
+      const clampedMultiplier = Math.min(maxSpeed, Math.max(minSpeed, speedMultiplier));
+      
+      // Calculate new duration (inversely proportional to speed)
+      const newDuration = baseSpeed / clampedMultiplier;
+      
+      // Smooth transition to new speed
       currentSpeedRef.current = gsap.utils.interpolate(
         currentSpeedRef.current,
-        targetSpeed,
-        0.5 // Interpolation factor
+        newDuration,
+        0.9  // Gentler interpolation factor
       );
 
       // Update animation duration for both marquees
       if (leftMarqueeRef.current) {
-        leftMarqueeRef.current.style.animationDuration = `${Math.abs(currentSpeedRef.current)}s`;
+        leftMarqueeRef.current.style.animationDuration = `${currentSpeedRef.current}s`;
       }
       if (rightMarqueeRef.current) {
-        rightMarqueeRef.current.style.animationDuration = `${Math.abs(currentSpeedRef.current)}s`;
+        rightMarqueeRef.current.style.animationDuration = `${currentSpeedRef.current}s`;
       }
     };
+
+    // Set initial animation speed
+    currentSpeedRef.current = 40;
 
     // Set up scroll velocity observer
     const trigger = ScrollTrigger.observe({
       type: "wheel,touch,scroll",
       onChange: (self) => {
-        updateSpeed(
-          Math.abs((Math.abs(self.velocityX) + Math.abs(self.velocityY)) / 1000)
-        );
+        // Calculate velocity from scroll movement
+        const scrollVelocity = Math.abs((Math.abs(self.velocityX) + Math.abs(self.velocityY)) / 1000);
+        // Ensure we have at least a minimum velocity
+        updateSpeed(Math.max(0.01, scrollVelocity));
       },
+      onStop: () => {
+        // When scrolling stops, gradually return to default speed
+        updateSpeed(0.01);
+      }
     });
 
     return () => trigger.kill();

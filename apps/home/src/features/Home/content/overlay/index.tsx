@@ -197,18 +197,22 @@ export function Overlay() {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    gsap.fromTo(
-      overlayRef.current,
-      { opacity: 0, filter: "blur(10px)" },
-      { opacity: 1, filter: "blur(0px)" }
-    );
-  }, [overlayRef.current]);
+    if (!overlayRef.current) return;
+    gsap.fromTo(overlayRef.current,
+      {
+        autoAlpha: usnap.display ? 1 : 0,
+        filter: usnap.display ? "blur(0px)" : "blur(10px)",
+      },
+      {
+      autoAlpha: usnap.display ? 0 : 1,
+      filter: usnap.display ? "blur(10px)" : "blur(0px)",
+    });
+  }, [overlayRef, usnap.display]);
   return (
     <>
       <div
         style={{
           color: gsnap.animatePrimary,
-          display: usnap.display ? "none" : "unset",
         }}
         className="absolute h-dvh w-screen pointer-events-none z-0"
       >
@@ -219,7 +223,7 @@ export function Overlay() {
             "flex flex-row flex-nowrap relative h-full w-full",
             mobile ? "gap-[50vw]" : "gap-0"
           )}
-          style={{ opacity: 0 }}
+          style={{ visibility: "hidden" }}
         >
           {sections.map((section, index) => (
             <SectionContainer
