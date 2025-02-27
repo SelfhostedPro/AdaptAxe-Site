@@ -7,6 +7,13 @@ initOpenNextCloudflareForDev();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@workspace/ui", "three"],
+  redirects: [
+    {
+      source: '/explore',
+      destination: '/',
+      permanent: true,
+    },
+  ],
 
   experimental: {
     // Disable for turbo
