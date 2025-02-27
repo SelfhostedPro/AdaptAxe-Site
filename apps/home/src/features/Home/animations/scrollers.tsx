@@ -62,14 +62,11 @@ export const useMobileScroll = (
   animating: RefObject<boolean>
 ) => {
   // Create paused timeline for manual control
-  const timeline = gsap
-    .timeline()
-    .to(sections, {
-      xPercent: () => -150 * (sections.length - 1), // Calculate total movement distance
-      ease: "none",
-      duration: sections.length - 1,
-    })
-    .pause();
+  const timeline = gsap.timeline({ paused: true }).to(sections, {
+    xPercent: () => -150 * (sections.length - 1), // Calculate total movement distance
+    ease: "none",
+    duration: sections.length - 1,
+  });
 
   // Set up touch/wheel observer for mobile interaction
   ScrollTrigger.observe({

@@ -118,11 +118,12 @@ const SectionContainer = ({
 
   return (
     <div
-      className={`h-dvh w-dvw relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-dvw`}
+      className={`h-dvh w-screen top-0 absolute section ${section.class}-section overflow-hidden`}
+      style={{ left: `${index * (mobile ? 150 : 100)}vw` }}
     >
       {/* Content layer */}
       <div
-        className={`${section.class}-card relative z-10 h-dvh min-w-[45dvw] flex flex-col pt-10 md:pb-16`}
+        className={`${section.class}-card relative z-10 h-dvh min-w-[45vw] flex flex-col pt-10 md:pb-16`}
       >
         {/* Content container */}
         <div
@@ -198,15 +199,17 @@ export function Overlay() {
 
   useGSAP(() => {
     if (!overlayRef.current) return;
-    gsap.fromTo(overlayRef.current,
+    gsap.fromTo(
+      overlayRef.current,
       {
         autoAlpha: usnap.display ? 1 : 0,
         filter: usnap.display ? "blur(0px)" : "blur(10px)",
       },
       {
-      autoAlpha: usnap.display ? 0 : 1,
-      filter: usnap.display ? "blur(10px)" : "blur(0px)",
-    });
+        autoAlpha: usnap.display ? 0 : 1,
+        filter: usnap.display ? "blur(10px)" : "blur(0px)",
+      }
+    );
   }, [overlayRef, usnap.display]);
   return (
     <>
@@ -218,12 +221,10 @@ export function Overlay() {
       >
         <div
           ref={overlayRef}
-          className={cn(
-            "scroll-container",
-            "flex flex-row flex-nowrap relative h-full w-full",
-            mobile ? "gap-[50vw]" : "gap-0"
-          )}
-          style={{ visibility: "hidden" }}
+          className={cn("scroll-container h-dvh w-screen overflow-clip")}
+          style={{
+            visibility: "hidden",
+          }}
         >
           {sections.map((section, index) => (
             <SectionContainer

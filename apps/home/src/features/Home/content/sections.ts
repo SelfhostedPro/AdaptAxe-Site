@@ -232,7 +232,7 @@ export function useSections({ refs }: SectionsProps) {
               )
               .to(refs.neckRef.current.position, {
                 x: 0,
-                y: mobile ? 3 : 2,
+                y: mobile ? 3.2 : 2,
                 z: -OFFPAGE_DISTANCE + 0.2,
               })
               .to(refs.coreRef.current.position, { z: -OFFPAGE_DISTANCE }, "<")

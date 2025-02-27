@@ -48,7 +48,10 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
     <div className="w-full py-4 text-center z-50">
       {/* Top handle with arrows and text */}
-      <div ref={handleRef} className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5">
+      <div
+        ref={handleRef}
+        className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5"
+      >
         <span
           className={cn(
             isExpanded ? "rotate-180" : "rotate-0",
@@ -163,7 +166,7 @@ export const MobileDrawer = ({
       }}
     >
       <motion.div
-        className="w-full h-full rounded-t-2xl bg-background/40 border-t-2 border-x-2 overscroll-contain border-foreground/10 cursor-grab backdrop-blur-3xl active:cursor-grabbing flex flex-col px-1"
+        className="w-full h-full rounded-t-2xl bg-background/90 dark:bg-background/60 backdrop-blur-3xl border-t-2 border-x-2 overscroll-contain border-foreground/10 cursor-grab active:cursor-grabbing flex flex-col px-1"
         drag="y"
         dragControls={dragControls}
         dragConstraints={{

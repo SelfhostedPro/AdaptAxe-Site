@@ -1,5 +1,6 @@
 "use client";
 
+import { AdaptiveDpr } from "@react-three/drei";
 import { Canvas, type CanvasProps } from "@react-three/fiber";
 
 export function MainCanvas({ children, ...rest }: CanvasProps) {
@@ -8,6 +9,7 @@ export function MainCanvas({ children, ...rest }: CanvasProps) {
 
   return (
     <Canvas
+      // WebGPU setup once it's more stable
       // gl={async (props) => {
       //   const renderer = new THREE.WebGPURenderer({
       //     antialias: !isAndroid,
@@ -23,8 +25,8 @@ export function MainCanvas({ children, ...rest }: CanvasProps) {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100dvw",
-        height: "100dvh",
+        width: "100vw",
+        height: "100vh",
         overflow: "hidden",
         pointerEvents: "none",
         touchAction: "none",
@@ -32,14 +34,15 @@ export function MainCanvas({ children, ...rest }: CanvasProps) {
       {...rest}
       // frameloop="always"
       shadows={!isAndroid}
-      dpr={isAndroid ? 0.75 : [1, 1.5]} // Lower resolution on Android
+      dpr={[1, 1.5]}
       gl={{
-        antialias: !isAndroid,
+        antialias: true,
         // alpha: isAndroid,
       }}
       // linear flat
     >
       {children}
+      <AdaptiveDpr pixelated />
     </Canvas>
   );
 }

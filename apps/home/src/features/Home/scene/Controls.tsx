@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
 import { useSnapshot } from "valtio";
 import { UIState } from "@/store/ui";
@@ -8,7 +8,6 @@ import { useBreakpoints } from "@/hooks/use-media-query";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ThreeElements } from "@react-three/fiber";
-import { Perf } from "r3f-perf";
 
 /**
  * Controls component manages the interactive camera controls for the 3D scene.
