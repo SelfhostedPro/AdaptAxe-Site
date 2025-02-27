@@ -240,23 +240,26 @@ export function TextAccents() {
     const updateSpeed = (velocity: number) => {
       // Use a different approach to calculate speed
       // Map velocity to a speed multiplier instead of directly to duration
-      const minSpeed = 0.5;  // Minimum speed multiplier (slower)
-      const maxSpeed = 8;    // Maximum speed multiplier (faster)
-      const baseSpeed = 40;  // Base animation duration
-      
+      const minSpeed = 0.5; // Minimum speed multiplier (slower)
+      const maxSpeed = 8; // Maximum speed multiplier (faster)
+      const baseSpeed = 40; // Base animation duration
+
       // Calculate speed multiplier based on velocity
       // Higher velocity = higher multiplier = faster animation
-      const speedMultiplier = minSpeed + (velocity * 50);
-      const clampedMultiplier = Math.min(maxSpeed, Math.max(minSpeed, speedMultiplier));
-      
+      const speedMultiplier = minSpeed + velocity * 50;
+      const clampedMultiplier = Math.min(
+        maxSpeed,
+        Math.max(minSpeed, speedMultiplier)
+      );
+
       // Calculate new duration (inversely proportional to speed)
       const newDuration = baseSpeed / clampedMultiplier;
-      
+
       // Smooth transition to new speed
       currentSpeedRef.current = gsap.utils.interpolate(
         currentSpeedRef.current,
         newDuration,
-        0.9  // Gentler interpolation factor
+        0.9 // Gentler interpolation factor
       );
 
       // Update animation duration for both marquees
@@ -276,14 +279,16 @@ export function TextAccents() {
       type: "wheel,touch,scroll",
       onChange: (self) => {
         // Calculate velocity from scroll movement
-        const scrollVelocity = Math.abs((Math.abs(self.velocityX) + Math.abs(self.velocityY)) / 1000);
+        const scrollVelocity = Math.abs(
+          (Math.abs(self.velocityX) + Math.abs(self.velocityY)) / 1000
+        );
         // Ensure we have at least a minimum velocity
         updateSpeed(Math.max(0.01, scrollVelocity));
       },
       onStop: () => {
         // When scrolling stops, gradually return to default speed
         updateSpeed(0.01);
-      }
+      },
     });
 
     return () => trigger.kill();
@@ -315,8 +320,8 @@ export function TextAccents() {
       {/* Left side sub-accents with slide animation */}
       <div
         style={{
-          animation: "slide-from-left 0.3s ease-out forwards",
-          animationDelay: "1s",
+          animation:
+            "slide-from-left 0.3s cubic-bezier(.45,.05,.55,.95) 1s forwards",
           opacity: 0,
           ...leftAccentStyle,
         }}
@@ -328,8 +333,8 @@ export function TextAccents() {
       {/* Left side marquee */}
       <div
         style={{
-          animation: "wipe-from-center 0.3s linear forwards",
-          animationDelay: "0.3s",
+          animation:
+            "wipe-from-center 0.3s cubic-bezier(.45,.05,.55,.95) 0.3s forwards",
           opacity: 0,
         }}
         className="absolute left-1 top-0 bottom-0 border-r-[0.1px] bg-background border-foreground/40 flex h-dvh overflow-hidden z-10"
@@ -347,8 +352,8 @@ export function TextAccents() {
       {/* Right side marquee */}
       <div
         style={{
-          animation: "wipe-from-center 0.3s linear forwards",
-          animationDelay: "0.3s",
+          animation:
+            "wipe-from-center 0.3s cubic-bezier(.45,.05,.55,.95) 0.3s forwards",
           opacity: 0,
         }}
         className="absolute right-1 border-l-[0.1px] bg-background border-foreground/40 top-0 bottom-0 flex h-dvh overflow-hidden z-10"

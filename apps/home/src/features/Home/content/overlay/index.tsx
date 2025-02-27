@@ -118,11 +118,11 @@ const SectionContainer = ({
 
   return (
     <div
-      className={`h-dvh w-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen`}
+      className={`h-dvh w-dvw relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-dvw`}
     >
       {/* Content layer */}
       <div
-        className={`${section.class}-card relative z-10 h-dvh min-w-[45vw] flex flex-col pt-10 md:pb-16`}
+        className={`${section.class}-card relative z-10 h-dvh min-w-[45dvw] flex flex-col pt-10 md:pb-16`}
       >
         {/* Content container */}
         <div

@@ -1,12 +1,7 @@
 "use client";
 
 import { Canvas, type CanvasProps } from "@react-three/fiber";
-import { ScrollControls, View } from "@react-three/drei";
-import { Suspense } from "react";
-import { useSnapshot } from "valtio";
-import { GuitarState } from "@/store/guitar";
-import { Parts } from "@/constants";
-import * as THREE from "three/webgpu";
+
 export function MainCanvas({ children, ...rest }: CanvasProps) {
   const isAndroid =
     typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
@@ -36,11 +31,11 @@ export function MainCanvas({ children, ...rest }: CanvasProps) {
       }}
       {...rest}
       // frameloop="always"
-      shadows
+      shadows={!isAndroid}
       dpr={isAndroid ? 0.75 : [1, 1.5]} // Lower resolution on Android
       gl={{
-        antialias: true,
-        alpha: true,
+        antialias: !isAndroid,
+        // alpha: isAndroid,
       }}
       // linear flat
     >

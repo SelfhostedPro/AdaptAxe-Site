@@ -62,9 +62,12 @@ function _Explore() {
   const containerRef = useGuitarRefs().containerRef;
 
   return (
-    <main ref={containerRef} className="w-dvw h-dvh overflow-hidden main">
+    <main
+      ref={containerRef}
+      className="w-dvw h-dvh overflow-hidden main bg-background"
+    >
       {/* Background Layer */}
-      <div className="fixed inset-0 pointer-events-none">
+      <div className="fixed top-0 left-0 w-dvw h-dvh pointer-events-none">
         {/* Text accents */}
         <TextAccents />
       </div>

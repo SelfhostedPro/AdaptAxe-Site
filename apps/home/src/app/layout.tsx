@@ -56,11 +56,13 @@ export const metadata: Metadata = {
 };
 
 const fontSans = Chivo({
+  preload: false,
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
 const fontMono = JetBrains_Mono({
+  preload: false,
   subsets: ["latin"],
   variable: "--font-mono",
 });
@@ -72,8 +74,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+      {/* <script src="https://greggman.github.io/webgl-lint/webgl-lint.js" crossOrigin={""}></script> */}
+      </head>
       <body
-        className={`${fontSans.variable}  ${fontMono.variable} font-sans antialiased `}
+        className={`${fontSans.variable}  ${fontMono.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <PostHogProvider>

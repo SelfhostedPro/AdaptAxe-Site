@@ -13,6 +13,8 @@ import type { GLTF } from "three-stdlib";
 import { useGuitar } from "../providers/GuitarProvider";
 import { useBreakpoints } from "@/hooks/use-media-query";
 
+const MODEL_URL = "https://assets.adaptaxe.com/site-model-low.glb";
+
 type StyleType = "squared" | "filled";
 
 type GuitarPartsProps = {
@@ -51,11 +53,7 @@ export function Model({
   const { refs } = useGuitar();
   const snap = useSnapshot(GuitarState);
   const { progress } = useProgress();
-  const { nodes, materials } = useGLTF(
-    "https://assets.adaptaxe.com/main.glb",
-    true,
-    true
-  ) as GLTFResult;
+  const { nodes, materials } = useGLTF(MODEL_URL, true, true) as GLTFResult;
   const three = useThree();
   const { mobile } = useBreakpoints();
 
@@ -202,7 +200,4 @@ export function Model({
   );
 }
 
-useGLTF.preload(
-  // "https://assets.adaptaxe.com/guitar-transformed.glb",
-  "https://assets.adaptaxe.com/main.glb"
-);
+useGLTF.preload(MODEL_URL);
