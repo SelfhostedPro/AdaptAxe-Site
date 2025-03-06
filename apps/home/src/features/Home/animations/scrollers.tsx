@@ -3,6 +3,7 @@ import { gsap } from "gsap/gsap-core";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Observer } from "gsap/Observer";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 // Register GSAP plugins
 gsap.registerPlugin(useGSAP, ScrollTrigger, Observer);
@@ -28,7 +29,8 @@ export const enableControllers = (
 // Desktop scroll controller implementation
 export const useDesktopScroll = (
   sections: Element[],
-  percent: number
+  percent: number,
+  sensitivity: number = 0.3
   //   onSectionChange: (index: number) => void
 ) => {
   return gsap.to(sections, {
@@ -43,7 +45,7 @@ export const useDesktopScroll = (
       scrub: 0.9, // Smooth scrolling effect
       invalidateOnRefresh: true,
       snap: {
-        snapTo: directionalSnap(1 / (sections.length - 1), 0.3), // Snap to sections
+        snapTo: directionalSnap(1 / (sections.length - 1), sensitivity), // Snap to sections
         delay: 0,
         inertia: false,
         duration: { min: 0.1, max: 0.3 }, // Faster snap duration

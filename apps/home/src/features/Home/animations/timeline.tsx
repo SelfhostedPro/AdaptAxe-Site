@@ -59,7 +59,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       // Use appropriate scroll controller based on device type
       const scrollTween = mobile
         ? useMobileScroll(sections, animating)
-        : useDesktopScroll(sections, mobile ? 150 : 100);
+        : useDesktopScroll(sections, mobile ? 150 : 100, lg ? 0.1 : 0.3);
 
       // Set up content reveal animations
       const contents = gsap.utils.toArray(".content");
