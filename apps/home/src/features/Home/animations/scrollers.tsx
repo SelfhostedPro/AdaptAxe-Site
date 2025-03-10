@@ -3,6 +3,7 @@ import { gsap } from "gsap/gsap-core";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Observer } from "gsap/Observer";
+import { useBreakpoints } from "@/hooks/use-media-query";
 
 // Register GSAP plugins
 gsap.registerPlugin(useGSAP, ScrollTrigger, Observer);
@@ -12,8 +13,8 @@ export const disableControllers = (
   e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
 ) => {
   e?.stopPropagation();
-  ScrollTrigger.getById("container")?.disable(false, false);
-  Observer.getById("ios-observe")?.disable();
+  ScrollTrigger.getById("container-scroll")?.disable(false, false);
+  Observer.getById("container-observe")?.disable();
 };
 
 // Helper function to enable scroll controllers and observers
@@ -21,14 +22,15 @@ export const enableControllers = (
   e?: React.PointerEvent<HTMLElement> | PointerEvent | MouseEvent | TouchEvent
 ) => {
   e?.stopPropagation();
-  ScrollTrigger.getById("container")?.enable(false, false);
-  Observer.getById("ios-observe")?.enable();
+  ScrollTrigger.getById("container-scroll")?.enable(false, false);
+  Observer.getById("container-observe")?.enable();
 };
 
 // Desktop scroll controller implementation
 export const useDesktopScroll = (
   sections: Element[],
-  percent: number
+  percent: number,
+  sensitivity: number = 0.3
   //   onSectionChange: (index: number) => void
 ) => {
   return gsap.to(sections, {
@@ -43,7 +45,7 @@ export const useDesktopScroll = (
       scrub: 0.9, // Smooth scrolling effect
       invalidateOnRefresh: true,
       snap: {
-        snapTo: directionalSnap(1 / (sections.length - 1), 0.3), // Snap to sections
+        snapTo: directionalSnap(1 / (sections.length - 1), sensitivity), // Snap to sections
         delay: 0,
         inertia: false,
         duration: { min: 0.1, max: 0.3 }, // Faster snap duration
@@ -62,14 +64,11 @@ export const useMobileScroll = (
   animating: RefObject<boolean>
 ) => {
   // Create paused timeline for manual control
-  const timeline = gsap
-    .timeline()
-    .to(sections, {
-      xPercent: () => -150 * (sections.length - 1), // Calculate total movement distance
-      ease: "none",
-      duration: sections.length - 1,
-    })
-    .pause();
+  const timeline = gsap.timeline({ paused: true }).to(sections, {
+    xPercent: () => -150 * (sections.length - 1), // Calculate total movement distance
+    ease: "none",
+    duration: sections.length - 1,
+  });
 
   // Set up touch/wheel observer for mobile interaction
   ScrollTrigger.observe({
@@ -105,8 +104,8 @@ export const useMobileScroll = (
         animating.current = true;
         gsap.to(timeline, {
           progress: targetProgress,
-          duration: 0.5,
-          ease: "none",
+          duration: 0.8,
+          ease: "power1.inOut",
           onComplete: () => {
             // Reset animating flag after delay
             gsap.delayedCall(0.5, () => {

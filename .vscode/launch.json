@@ -1,47 +1,58 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Next.js: debug server-side",
-        "type": "node-terminal",
-        "request": "launch",
-        "cwd": "${workspaceFolder}/apps/home",
-        "command": "bun run dev"
-      },
-      {
-        "name": "Next.js: debug client-side",
-        "type": "chrome",
-        "request": "launch",
-        "url": "http://localhost:3000"
-      },
-      {
-        "name": "Next.js: debug client-side (Firefox)",
-        "type": "firefox",
-        "request": "launch",
-        "url": "http://localhost:3000",
-        "reAttach": true,
-        "pathMappings": [
-          {
-            "url": "webpack://_N_E",
-            "path": "${workspaceFolder}/apps/home"
-          }
-        ]
-      },
-      {
-        "name": "Next.js: debug full stack",
-        "type": "node",
-        "request": "launch",
-        "program": "${workspaceFolder}/node_modules/.bin/next",
-        "runtimeArgs": ["--inspect"],
-        "skipFiles": ["<node_internals>/**"],
-        "runtimeExecutable": "",
-        "serverReadyAction": {
-          "action": "debugWithChrome",
-          "killOnServerStop": true,
-          "pattern": "- Local:.+(https?://.+)",
-          "uriFormat": "%s",
-          "webRoot": "${workspaceFolder}/apps/home"
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/apps/home",
+      "command": "bun run dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Wrangler",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "cwd": "/",
+      "resolveSourceMapLocations": null,
+      "attachExistingChildren": false,
+      "autoAttachChildProcesses": false,
+      "sourceMaps": true // works with or without this line
+    },
+    {
+      "name": "Next.js: debug client-side (Firefox)",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "reAttach": true,
+      "pathMappings": [
+        {
+          "url": "webpack://_N_E",
+          "path": "${workspaceFolder}/apps/home"
         }
+      ]
+    },
+    {
+      "name": "Next.js: debug full stack",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/next",
+      "runtimeArgs": ["--inspect"],
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "",
+      "serverReadyAction": {
+        "action": "debugWithChrome",
+        "killOnServerStop": true,
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "webRoot": "${workspaceFolder}/apps/home"
       }
-    ]
-  }
+    }
+  ]
+}

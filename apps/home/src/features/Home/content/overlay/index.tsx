@@ -9,11 +9,13 @@ import { ExploreAnimations } from "../../animations/timeline";
 import { useGuitar } from "@/components/providers/GuitarProvider";
 import { Socials } from "@/components/Links";
 import { TitleAccent } from "../accents/foreground";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Feature } from "../sections";
 import { useBreakpoints } from "@/hooks/use-media-query";
 import { MobileDrawer } from "./MobileDrawer";
-
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+gsap.registerPlugin(useGSAP);
 const FeatureItemContainer = ({
   children,
   feature,
@@ -27,7 +29,8 @@ const FeatureItemContainer = ({
       href={feature.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex rounded-none pointer-events-auto w-full pr-2 cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left"
+      className="group relative flex rounded-none pointer-events-auto w-full pr-2 cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left feature_link"
+      data-action={`${feature.name.toLowerCase()}__lnk_click`}
     >
       {children}
     </a>
@@ -36,11 +39,14 @@ const FeatureItemContainer = ({
       className={cn(
         "group relative flex rounded-none pointer-events-auto w-full px-2 md:px-0 md:pr-2",
         (feature.onClick || feature.onPointerEnter || feature.onPointerLeave) &&
-          "cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left"
+          "cursor-pointer hover:bg-foreground/5 transition-all duration-200 ease-out hover:scale-[1.02] origin-left feature_anim"
       )}
       onClick={() => feature.onClick?.()}
       onPointerEnter={() => feature.onPointerEnter?.()}
       onPointerLeave={() => feature.onPointerLeave?.()}
+      data-action={
+        feature.onClick ? `${feature.name.toLowerCase()}__btn_click` : undefined
+      }
     >
       {children}
     </div>
@@ -112,7 +118,8 @@ const SectionContainer = ({
 
   return (
     <div
-      className={`h-dvh w-screen relative isolate section ${section.class}-section shrink-0 overflow-hidden max-w-screen`}
+      className={`h-dvh w-screen top-0 absolute section ${section.class}-section overflow-hidden`}
+      style={{ left: `${index * (mobile ? 150 : 100)}vw` }}
     >
       {/* Content layer */}
       <div
@@ -188,21 +195,36 @@ export function Overlay() {
   const usnap = useSnapshot(UIState);
   const sections = useSections({ refs });
   const { mobile } = useBreakpoints();
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!overlayRef.current) return;
+    gsap.fromTo(
+      overlayRef.current,
+      {
+        autoAlpha: usnap.display ? 1 : 0,
+        filter: usnap.display ? "blur(0px)" : "blur(10px)",
+      },
+      {
+        autoAlpha: usnap.display ? 0 : 1,
+        filter: usnap.display ? "blur(10px)" : "blur(0px)",
+      }
+    );
+  }, [overlayRef, usnap.display]);
   return (
     <>
       <div
         style={{
           color: gsnap.animatePrimary,
-          display: usnap.display ? "none" : "unset",
         }}
         className="absolute h-dvh w-screen pointer-events-none z-0"
       >
         <div
-          className={cn(
-            "scroll-container",
-            "flex flex-row flex-nowrap relative h-full w-full",
-            mobile ? "gap-[50vw]" : "gap-0"
-          )}
+          ref={overlayRef}
+          className={cn("scroll-container h-dvh w-screen overflow-clip")}
+          style={{
+            visibility: "hidden",
+          }}
         >
           {sections.map((section, index) => (
             <SectionContainer

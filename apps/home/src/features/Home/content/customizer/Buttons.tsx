@@ -26,7 +26,7 @@ export function ControlButtons() {
       >
         <MoveHorizontal strokeWidth={1} />
       </Button>
-      
+
       {/* Toggle visibility panel button */}
       <Button
         size={"icon"}
@@ -39,7 +39,7 @@ export function ControlButtons() {
       >
         <Eye strokeWidth={1} />
       </Button>
-      
+
       {/* Toggle settings/controls panel button */}
       <Button
         size={"icon"}

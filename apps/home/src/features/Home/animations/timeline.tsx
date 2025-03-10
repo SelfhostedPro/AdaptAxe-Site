@@ -35,12 +35,7 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
   const gsnap = useSnapshot(GuitarState);
   const { active, progress } = useProgress();
   const animating = useRef(false);
-  
-  // Check if user is on mobile device
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
+
 
   useGSAP(
     () => {
@@ -62,9 +57,9 @@ export function ExploreAnimations({ refs }: { refs: GuitarRefs }) {
       const sections = gsap.utils.toArray(".section") as HTMLDivElement[];
 
       // Use appropriate scroll controller based on device type
-      const scrollTween = isMobile
+      const scrollTween = mobile
         ? useMobileScroll(sections, animating)
-        : useDesktopScroll(sections, mobile ? 150 : 100);
+        : useDesktopScroll(sections, mobile ? 150 : 100, lg ? 0.1 : 0.3);
 
       // Set up content reveal animations
       const contents = gsap.utils.toArray(".content");

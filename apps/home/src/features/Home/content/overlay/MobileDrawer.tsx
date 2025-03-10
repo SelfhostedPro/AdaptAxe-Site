@@ -18,12 +18,12 @@ gsap.registerPlugin(ScrollTrigger, Observer);
  */
 interface DrawerProps {
   children: React.ReactNode;
-  minHeight: string;  // Height when drawer is collapsed
-  maxHeight: string;  // Height when drawer is expanded
-  isExpanded: boolean;  // Current expansion state
-  setIsExpanded: (expanded: boolean) => void;  // Function to update expansion state
-  isAnimating?: boolean;  // Whether the drawer is currently animating
-  setIsAnimating?: (animating: boolean) => void;  // Function to update animation state
+  minHeight: string; // Height when drawer is collapsed
+  maxHeight: string; // Height when drawer is expanded
+  isExpanded: boolean; // Current expansion state
+  setIsExpanded: (expanded: boolean) => void; // Function to update expansion state
+  isAnimating?: boolean; // Whether the drawer is currently animating
+  setIsAnimating?: (animating: boolean) => void; // Function to update animation state
 }
 
 /**
@@ -31,10 +31,27 @@ interface DrawerProps {
  * that users can interact with to expand or collapse the drawer
  */
 export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
+  const handleRef = useRef<HTMLDivElement>(null);
+  // Add a subtle pulse animation when the page loads to draw attention to the drawer
+  useEffect(() => {
+    if (handleRef.current) {
+      gsap.to(handleRef.current, {
+        y: 3,
+        duration: 0.5,
+        repeat: 3,
+        yoyo: true,
+        ease: "power2.inOut",
+        delay: 2, // Wait for initial page load
+      });
+    }
+  }, []);
   return (
     <div className="w-full py-4 text-center z-50">
       {/* Top handle with arrows and text */}
-      <div className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5">
+      <div
+        ref={handleRef}
+        className="absolute rounded-t-xs top-0 w-full py-0.5 flex flex-row items-center gap-4 justify-around pt-1 text-foreground/60 px-5"
+      >
         <span
           className={cn(
             isExpanded ? "rotate-180" : "rotate-0",
@@ -56,7 +73,7 @@ export const DrawerHandle = ({ isExpanded }: { isExpanded: boolean }) => {
         </span>
       </div>
       {/* <div className="w-12 h-1 rounded-full bg-foreground/40 mx-auto" /> */}
-      
+
       {/* Vertical "FEATURES" text on the left side */}
       <span
         style={{
@@ -107,20 +124,6 @@ export const MobileDrawer = ({
   const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Add a subtle pulse animation when the page loads to draw attention to the drawer
-  useEffect(() => {
-    if (containerRef.current) {
-      gsap.to(containerRef.current, {
-        y: -10,
-        duration: 0.5,
-        repeat: 3,
-        yoyo: true,
-        ease: "power2.inOut",
-        delay: 2, // Wait for initial page load
-      });
-    }
-  }, []);
-
   // Provide haptic feedback when interacting with the drawer (if supported)
   const triggerHapticFeedback = () => {
     if (navigator.vibrate) {
@@ -163,7 +166,7 @@ export const MobileDrawer = ({
       }}
     >
       <motion.div
-        className="w-full h-full rounded-t-2xl bg-background/40 border-t-2 border-x-2 overscroll-contain border-foreground/10 cursor-grab backdrop-blur-3xl active:cursor-grabbing flex flex-col px-1"
+        className="w-full h-full rounded-t-2xl bg-background/90 dark:bg-background/60 backdrop-blur-3xl border-t-2 border-x-2 overscroll-contain border-foreground/10 cursor-grab active:cursor-grabbing flex flex-col px-1"
         drag="y"
         dragControls={dragControls}
         dragConstraints={{
@@ -192,7 +195,7 @@ export const MobileDrawer = ({
       >
         {/* Drawer handle for user interaction */}
         <DrawerHandle isExpanded={isExpanded} />
-        
+
         {/* Content container with scroll handling */}
         <div
           className="mx-4 flex-1 pb-4 inline-block cursor-auto overflow-y-auto rounded-t-lg bg-background"

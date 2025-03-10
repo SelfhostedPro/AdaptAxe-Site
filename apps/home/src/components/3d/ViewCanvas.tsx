@@ -1,66 +1,48 @@
 "use client";
 
+import { AdaptiveDpr } from "@react-three/drei";
 import { Canvas, type CanvasProps } from "@react-three/fiber";
-import { ScrollControls, View } from "@react-three/drei";
-import { Suspense } from "react";
-import { useSnapshot } from "valtio";
-import { GuitarState } from "@/store/guitar";
-import { Parts } from "@/constants";
 
 export function MainCanvas({ children, ...rest }: CanvasProps) {
+  const isAndroid =
+    typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
+
   return (
     <Canvas
+      // WebGPU setup once it's more stable
+      // gl={async (props) => {
+      //   const renderer = new THREE.WebGPURenderer({
+      //     antialias: !isAndroid,
+      //     precision: isAndroid ? "lowp" : "mediump", // Use lowest precision on Android
+      //     depth: true,
+      //     stencil: false,
+      //     ...(props as any),
+      //   });
+      //   await renderer.init();
+      //   return renderer;
+      // }}
       style={{
         position: "fixed",
         top: 0,
-        left: "50%",
-        transform: "translateX(-50%)",
+        left: 0,
+        width: "100vw",
+        height: "100vh",
         overflow: "hidden",
         pointerEvents: "none",
         touchAction: "none",
       }}
       {...rest}
-      shadows
-      dpr={[1, 50]}
-      gl={{ antialias: true }}
+      // frameloop="always"
+      shadows={!isAndroid}
+      dpr={[1, 1.5]}
+      gl={{
+        antialias: true,
+        // alpha: isAndroid,
+      }}
       // linear flat
     >
-      <Suspense fallback={null}>{children}</Suspense>
-    </Canvas>
-  );
-}
-
-export function ViewCanvas(props: Omit<CanvasProps, "children">) {
-  const snap = useSnapshot(GuitarState);
-  return (
-    <Canvas
-      style={{
-        position: "fixed",
-        top: 0,
-        left: "50%",
-        transform: "translateX(-50%)",
-        overflow: "hidden",
-        pointerEvents: "none",
-        touchAction: "none",
-      }}
-      {...props}
-      frameloop="demand"
-      shadows
-      dpr={[1, 50]}
-      gl={{ antialias: true }}
-    >
-      <ScrollControls pages={Parts.length} damping={0.2} horizontal>
-        <Suspense fallback={null}>
-          <View.Port />
-        </Suspense>
-      </ScrollControls>
-
-      {/* <Html prepend fullscreen>
-        <div
-          style={{ backgroundColor: snap.primary }}
-          className="w-screen h-screen fixed left-0 transition-colors duration-200 brightness-[290%]"
-        />
-      </Html> */}
+      {children}
+      <AdaptiveDpr pixelated />
     </Canvas>
   );
 }

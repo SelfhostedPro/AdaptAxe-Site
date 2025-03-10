@@ -109,8 +109,9 @@ const RightAnimation = createAnimation(
     return gsap
       .timeline()
       .to(refs.rightRef.current!.position, { x: 0 }, ">")
-      .to(refs.groupRef.current!.position, { y: 0 }, ">")
-      .to(refs.rightRef.current!.position, { z: 0 }, "<");
+      .to(refs.rightRef.current!.position, { z: OFFPAGE_DISTANCE * 4 }, "<")
+      .to(refs.leftRef.current.position, { z: OFFPAGE_DISTANCE * 4 })
+      .to(refs.groupRef.current!.position, { y: 0 }, ">");
   }
 );
 
@@ -208,6 +209,7 @@ const BridgeAnimation = createAnimation(
       .timeline()
       .to(refs.bridgeRef.current.position, { z: OFFPAGE_DISTANCE / 1.2 })
       .to(refs.groupRef.current.position, { y: OFFPAGE_DISTANCE }, "<")
+
       .to(
         [
           refs.coreRef.current.position,
@@ -222,9 +224,19 @@ const BridgeAnimation = createAnimation(
     return gsap
       .timeline()
       .to(refs.bridgeRef.current.position, { z: 0 }, ">")
+      .set(
+        [refs.leftRef.current.position, refs.rightRef.current.position],
+        { z: -OFFPAGE_DISTANCE * 2 },
+        "<"
+      )
       .to(
-        [refs.bridgeRef.current.position, refs.groupRef.current.position],
-        { y: 0 },
+        [
+          refs.bridgeRef.current.position,
+          refs.groupRef.current.position,
+          refs.rightRef.current.position,
+          refs.leftRef.current.position,
+        ],
+        { y: 0, z: 0 },
         "<"
       );
   }
